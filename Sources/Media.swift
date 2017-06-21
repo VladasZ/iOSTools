@@ -11,7 +11,7 @@ import Photos
 import CoreGraphics
 import CoreImage
 import MobileCoreServices
-import SwiftTools
+import SwiftyTools
 
 public class Media : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     

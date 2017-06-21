@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SwiftTools
+import SwiftyTools
 
 public var topmostController: UIViewController {
     

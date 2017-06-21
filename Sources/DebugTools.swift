@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SwiftTools
+import SwiftyTools
 
 public class Debug {
     
