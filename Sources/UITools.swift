@@ -98,18 +98,9 @@ public extension UIView {
     @discardableResult func circle() -> Self {
         
         clipsToBounds = true
-        layer.cornerRadius = height / 2
+        layer.cornerRadius = frame.size.height / 2
         
         return self
-    }
-    
-    func removeDummies() {
-        
-        for view in self.subviews {
-            if view.tag == UIView.dummyTag {
-                view.removeFromSuperview()
-            }
-        }
     }
     
     func makeHoleAtCenterWithRadius(_ radius: CGFloat) {
@@ -124,7 +115,7 @@ public extension UIView {
     
     func makeHoleAt(_ rect: CGRect) {
         
-        let backgroundPath = UIBezierPath(rect: CGRect(0, 0, width, height))
+        let backgroundPath = UIBezierPath(rect: CGRect(0, 0, frame.size.width, frame.size.height))
         let circlePath     = UIBezierPath(ovalIn: rect)
         
         circlePath.append(backgroundPath)
