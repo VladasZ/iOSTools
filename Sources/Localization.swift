@@ -23,3 +23,19 @@ public extension UIButton {
         get { return "No localizedString getter" }
     }
 }
+
+public extension UITabBarItem {
+    
+    @IBInspectable public var localizedString: String {
+        set { title = NSLocalizedString(newValue, comment: "")  }
+        get { return "No localizedString getter" }
+    }
+}
+
+public extension UIViewController {
+    
+    @IBInspectable public var localizedString: String {
+        set { title = NSLocalizedString(newValue, comment: "")  }
+        get { return "No localizedString getter" }
+    }
+}
