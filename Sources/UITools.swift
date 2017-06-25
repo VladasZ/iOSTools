@@ -41,6 +41,27 @@ func openSettings() {
 
 public extension UIView {
     
+    //MARK: - Dummies
+    
+    static let dummyTag = "dummy".hash
+    
+    static var dummy: UIView {
+        
+        let dummy = UIView(CGRect(0, 0, 100, 100))
+        dummy.backgroundColor = UIColor.random
+        dummy.tag = dummyTag
+        return dummy
+    }
+    
+    func removeDummies() {
+        
+        for view in self.subviews {
+            if view.tag == UIView.dummyTag {
+                view.removeFromSuperview()
+            }
+        }
+    }
+    
     //MARK: - Initializators
     
     convenience init(_ frame: CGRect) {
@@ -130,7 +151,6 @@ public extension UIView {
 //MARK: - Animations
 
 fileprivate let ANIMATION_DURATION:TimeInterval = 0.211
-
 
 public extension UIView {
     
