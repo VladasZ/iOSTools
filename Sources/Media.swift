@@ -34,6 +34,15 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     private static var videoCompletion: ((URL) -> ())?
     private static var universalCompletion: ((UIImage?, URL?) -> ())?
     
+    public static var controller: UIViewController?
+    
+    private static var topController: UIViewController {
+        
+        if let controller = controller { return controller }
+        return topmostController
+    }
+    
+    
     private static var pickTitle: String {
         
         if universalCompletion != nil { return mediaPickTitle }
@@ -70,21 +79,21 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         
         videoCompletion = completion
         if photoDialog == nil { setDialog() }
-        topmostController.present(photoDialog!, animated: true, completion: nil)
+        topController.present(photoDialog!, animated: true, completion: nil)
     }
     
     public static func getImage(_ completion: @escaping (UIImage) -> ()) {
         
         photoCompletion = completion
         if photoDialog == nil { setDialog() }
-        topmostController.present(photoDialog!, animated: true, completion: nil)
+        topController.present(photoDialog!, animated: true, completion: nil)
     }
     
     public static func get(_ completion: @escaping (UIImage?, URL?) -> ()) {
         
         universalCompletion = completion
         if photoDialog == nil { setDialog() }
-        topmostController.present(photoDialog!, animated: true, completion: nil)
+        topController.present(photoDialog!, animated: true, completion: nil)
     }
     
     private static func pickVideo() {
@@ -92,7 +101,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         checkLibraryPermission {
             let controller = Media()
             controller.isVideo = true            
-            topmostController.present(controller, animated: true)
+            topController.present(controller, animated: true)
         }
     }
     
@@ -102,7 +111,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             let controller = Media()
             controller.isVideo = true
             controller.sourceType = .camera
-            topmostController.present(controller, animated: true)
+            topController.present(controller, animated: true)
         }
     }
     
@@ -110,7 +119,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         
         checkLibraryPermission {
             let controller = Media()
-            topmostController.present(controller, animated: true)
+            topController.present(controller, animated: true)
         }
     }
     
@@ -119,7 +128,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         checkCameraPermission {
             let controller = Media()
             controller.sourceType = .camera
-            topmostController.present(controller, animated: true)
+            topController.present(controller, animated: true)
         }
     }
     
