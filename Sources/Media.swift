@@ -17,7 +17,9 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     
     //MARK: - Strings
     
-    public static var pickTitle:String = "Add photo"
+    public static var imagePickTitle:String = "Add photo"
+    public static var videoPickTitle:String = "Add video"
+    public static var mediaPickTitle:String = "Add photo or video"
     public static var pickImageFromGalleryCaption:String = "Pick image from gallery"
     public static var takePhotoCaption:String = "Take a photo"
     public static var pickVideoFromGalleryCaption:String = "Pick video from gallery"
@@ -31,6 +33,14 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     private static var photoCompletion: ((UIImage) -> ())?
     private static var videoCompletion: ((URL) -> ())?
     private static var universalCompletion: ((UIImage?, URL?) -> ())?
+    
+    private static var pickTitle: String {
+        
+        if universalCompletion != nil { return mediaPickTitle }
+        if videoCompletion != nil { return videoPickTitle }
+        if photoCompletion != nil { return imagePickTitle }
+        Log.error(); return mediaPickTitle
+    }
     
     private static var hasVideo: Bool {
         
@@ -47,6 +57,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         photoCompletion = nil
         videoCompletion = nil
         universalCompletion = nil
+        photoDialog = nil
     }
     
     //MARK: - Properties
@@ -224,7 +235,9 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             photoDialog.addAction(UIAlertAction(title: recordVideoCaption, style: .default)          { _ in Media.recordVideo() })
         }
         
-        photoDialog.addAction(UIAlertAction(title: cancelCaption, style: .cancel, handler: nil))
+        photoDialog.addAction(UIAlertAction(title: cancelCaption, style: .cancel) { _ in clearCompletions() })
+        
+    
     }
 }
 
