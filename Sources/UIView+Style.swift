@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyTools
 
-extension UIView {
+public extension UIView {
     
     @IBInspectable var styleID: String {
         get { return "nil" }
