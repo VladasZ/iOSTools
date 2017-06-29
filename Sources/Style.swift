@@ -10,9 +10,9 @@ import UIKit
 
 public class Style {
     
-    public static var styles = [Style]()
+    internal static var styles = [Style]()
     
-    public static func styleWithID(_ id: String) -> Style? {
+    internal static func styleWithID(_ id: String) -> Style? {
         
         return (styles.filter { $0.identifier == id }).first
     }
@@ -29,5 +29,6 @@ public class Style {
     public init(id: String) {
         
         identifier = id
+        Style.styles.append(self)
     }
 }

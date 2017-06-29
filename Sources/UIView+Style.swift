@@ -47,7 +47,7 @@ public extension UIView {
         }
     }
     
-    func setStyleWithID(_ id: String) {
+    private func setStyleWithID(_ id: String) {
         
         style = Style.styleWithID(id)
     }
