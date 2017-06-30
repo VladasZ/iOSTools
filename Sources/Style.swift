@@ -25,6 +25,7 @@ public class Style {
     public var borderWidth: CGFloat?
     public var borderColor: UIColor?
     public var clipsToBounds: Bool?
+    public var font: UIFont?
     
     public init(id: String) {
         

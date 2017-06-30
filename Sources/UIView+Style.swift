@@ -44,6 +44,25 @@ public extension UIView {
             if let clipsToBounds = style.clipsToBounds {
                 self.clipsToBounds = clipsToBounds
             }
+            
+            if let font = style.font {
+                
+                if let label = self as? UILabel {
+                    label.font = font
+                }
+                else if let textField = self as? UITextField {
+                    textField.font = font
+                }
+                else if let textView = self as? UITextView {
+                    textView.font = font
+                }
+                else if let button = self as? UIButton {
+                    button.titleLabel?.font = font
+                }
+                else {
+                    Log.error(style.identifier)
+                }
+            }
         }
     }
     
