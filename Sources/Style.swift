@@ -17,15 +17,17 @@ public class Style {
         return (styles.filter { $0.identifier == id }).first
     }
     
-    public var identifier: String
+    public var identifier:       String
     
-    public var color: UIColor?
-    public var isCircle = false
-    public var cornerRadius: CGFloat?
-    public var borderWidth: CGFloat?
-    public var borderColor: UIColor?
-    public var clipsToBounds: Bool?
-    public var font: UIFont?
+    public var color:            UIColor?
+    public var isCircle          = false
+    public var cornerRadius:     CGFloat?
+    public var borderWidth:      CGFloat?
+    public var borderColor:      UIColor?
+    public var clipsToBounds:    Bool?
+    public var font:             UIFont?
+    public var textColor:        UIColor?
+    public var placeholderColor: UIColor?
     
     public init(id: String) {
         

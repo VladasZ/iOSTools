@@ -9,6 +9,77 @@
 import UIKit
 import SwiftyTools
 
+fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
+    
+    guard let style = style else { Log.error(); return }
+    
+    if let color = style.color {
+        view.backgroundColor = color
+    }
+    
+    if style.isCircle {
+        view.circle()
+    }
+    
+    if let cornerRadius = style.cornerRadius {
+        view.layer.cornerRadius = cornerRadius
+    }
+    
+    if let borderWidth = style.borderWidth {
+        view.layer.borderWidth = borderWidth
+    }
+    
+    if let borderColor = style.borderColor {
+        view.layer.borderColor = borderColor.cgColor
+    }
+    
+    if let clipsToBounds = style.clipsToBounds {
+        view.clipsToBounds = clipsToBounds
+    }
+    
+    if let font = style.font {
+        
+        if let label = view as? UILabel {
+            label.font = font
+        }
+        else if let textField = view as? UITextField {
+            textField.font = font
+        }
+        else if let textView = view as? UITextView {
+            textView.font = font
+        }
+        else if let button = view as? UIButton {
+            button.titleLabel?.font = font
+        }
+    }
+    
+    if let textColor = style.textColor {
+        
+        if let label = view as? UILabel {
+            label.textColor = textColor
+        }
+        else if let textField = view as? UITextField {
+            textField.textColor = textColor
+        }
+        else if let textView = view as? UITextView {
+            textView.textColor = textColor
+        }
+        else if let button = view as? UIButton {
+            button.titleLabel?.textColor = textColor
+        }
+    }
+    
+    if let placeholderColor = style.placeholderColor {
+        
+        if let textField = view as? UITextField {
+            
+            let placeholderText = textField.placeholder ?? ""
+            textField.attributedPlaceholder = NSAttributedString(string: placeholderText,
+                                                                 attributes: [NSForegroundColorAttributeName : placeholderColor])
+        }
+    }
+}
+
 public extension UIView {
     
     @IBInspectable var styleID: String {
@@ -16,58 +87,29 @@ public extension UIView {
         set { setStyleWithID(newValue) }
     }
     
-    var style: Style? { get { return Style(id: "nil") }
-        set {
-            
-            guard let style = newValue else { Log.error(); return }
-            
-            if let color = style.color {
-                backgroundColor = color
-            }
-            
-            if style.isCircle {
-                circle()
-            }
-            
-            if let cornerRadius = style.cornerRadius {
-                layer.cornerRadius = cornerRadius
-            }
-            
-            if let borderWidth = style.borderWidth {
-                layer.borderWidth = borderWidth
-            }
-            
-            if let borderColor = style.borderColor {
-                layer.borderColor = borderColor.cgColor
-            }
-            
-            if let clipsToBounds = style.clipsToBounds {
-                self.clipsToBounds = clipsToBounds
-            }
-            
-            if let font = style.font {
-                
-                if let label = self as? UILabel {
-                    label.font = font
-                }
-                else if let textField = self as? UITextField {
-                    textField.font = font
-                }
-                else if let textView = self as? UITextView {
-                    textView.font = font
-                }
-                else if let button = self as? UIButton {
-                    button.titleLabel?.font = font
-                }
-                else {
-                    Log.error(style.identifier)
-                }
-            }
-        }
+    var style: Style? {
+        get { return Style(id: "nil") }
+        set { setupView(self, withStyle: newValue) }
     }
     
-    private func setStyleWithID(_ id: String) {
+    fileprivate func setStyleWithID(_ id: String) {
         
         style = Style.styleWithID(id)
+    }
+}
+
+public extension UITextField {
+    
+    @IBInspectable override var styleID: String {
+        get { return "nil" }
+        set { setStyleWithID(newValue) }
+    }
+}
+
+public extension UITextView {
+    
+    @IBInspectable override var styleID: String {
+        get { return "nil" }
+        set { setStyleWithID(newValue) }
     }
 }
