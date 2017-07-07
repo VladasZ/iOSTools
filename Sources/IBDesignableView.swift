@@ -12,10 +12,7 @@ import SwiftyTools
 @IBDesignable
 open class IBDesignableView : UIView {
     
-    open var identifier: String {
-        Log.error("To use IBDesignableView override identifier property" )
-        return "IBDesignableView"
-    }
+    private var identifier: String { return String(describing: type(of: self)) }
     
     //MARK: - Initialization
     
