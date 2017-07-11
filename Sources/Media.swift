@@ -199,9 +199,11 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if var image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
             if !Media.hasPhoto { Log.error() }
+            
+            image = image.withoutRotation
             
             dismiss(animated: true, completion: nil)
             
