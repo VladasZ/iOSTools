@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyTools
 
-public class Debug {
+public extension Debug {
     
     public static var notImplementedMessage = "Not implemented yet"
     
