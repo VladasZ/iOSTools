@@ -78,6 +78,18 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
                                                                  attributes: [NSForegroundColorAttributeName : placeholderColor])
         }
     }
+    
+    if let textAlignment = style.textAlignment {
+        
+        if let textField = view as? UITextField {
+            
+            textField.textAlignment = textAlignment
+        }
+        else if let label = view as? UILabel {
+            
+            label.textAlignment = textAlignment
+        }
+    }
 }
 
 public extension UIView {

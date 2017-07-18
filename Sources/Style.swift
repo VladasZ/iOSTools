@@ -28,6 +28,7 @@ public class Style {
     public var font:             UIFont?
     public var textColor:        UIColor?
     public var placeholderColor: UIColor?
+    public var textAlignment:    NSTextAlignment?
     
     public init(id: String) {
         
