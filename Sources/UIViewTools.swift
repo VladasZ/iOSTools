@@ -11,6 +11,11 @@ import SwiftyTools
 
 public extension UIView {
     
+    func removeAllSubviews() {
+        
+        subviews.forEach { $0.removeFromSuperview() }
+    }
+    
     func addTransparentBlur(style: UIBlurEffectStyle = .light) {
         
         //http://stackoverflow.com/questions/17041669/creating-a-blurring-overlay-view
