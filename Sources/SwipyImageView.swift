@@ -10,7 +10,6 @@ import UIKit
 
 let DOTS_SPACING:CGFloat = 9
 let DOT_SIZE:CGFloat = 8
-let UNSELECTED_DOT_ALPHA:CGFloat = 0.32
 
 public protocol SwipyImageViewDelegate : class {
     
@@ -26,6 +25,9 @@ public class SwipyImageView : IBDesignableView, UIScrollViewDelegate {
     @IBOutlet public var stackView: UIStackView!
     
     //MARK: - Properties
+    
+    @IBInspectable public var selectedColor: UIColor! = UIColor.white
+    @IBInspectable public var notSelectedColor: UIColor! = UIColor.gray
     
     public var delegate: SwipyImageViewDelegate?
     
@@ -64,7 +66,7 @@ public class SwipyImageView : IBDesignableView, UIScrollViewDelegate {
                 scrollView.addSubview(imageView)
             }
             
-            dots.first!.alpha = 1
+            dots.first!.backgroundColor = selectedColor
             
             stackViewWidth.constant = calculateStackWidth()
         }
@@ -81,8 +83,7 @@ public class SwipyImageView : IBDesignableView, UIScrollViewDelegate {
         
         let dot = UIView(frame: CGRect(x:0, y:0, width: DOT_SIZE, height: DOT_SIZE))
         dot.circle()
-        dot.backgroundColor = UIColor.black
-        dot.alpha = UNSELECTED_DOT_ALPHA
+        dot.backgroundColor = notSelectedColor
         
         return dot
     }
@@ -112,8 +113,8 @@ public class SwipyImageView : IBDesignableView, UIScrollViewDelegate {
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        dots.forEach { dot in dot.alpha = UNSELECTED_DOT_ALPHA }
-        dots[expectedIndex].alpha = 1
+        dots.forEach { dot in dot.backgroundColor = notSelectedColor }
+        dots[expectedIndex].backgroundColor = selectedColor
         delegate?.swipyImageViewDidSelectImage(expectedIndex)
     }
 }
