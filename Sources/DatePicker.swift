@@ -12,6 +12,18 @@ fileprivate var _backgroundColor = UIColor.gray
 fileprivate var _doneButtonTextAligment: UIControlContentHorizontalAlignment = .center
 fileprivate var _onFinishPicking: (() -> ())?
 
+public protocol DatePickerDelegate : class {
+    
+    func datePickerDidBeginPicking()
+    func datePickerDidEndPicking()
+}
+
+public extension DatePickerDelegate {
+    
+    func datePickerDidBeginPicking() { }
+    func datePickerDidEndPicking() { }
+}
+
 public class DatePicker : UIView {
     
     //MARK: - Properties
@@ -33,6 +45,8 @@ public class DatePicker : UIView {
     
     private(set) public static var isHidden: Bool = true
     public static var date: Date = Date()
+    
+    public static weak var delegate: DatePickerDelegate?
     
     public static func onFinishPicking(_ action: @escaping () -> ()) {
         
@@ -98,6 +112,8 @@ public class DatePicker : UIView {
         keyWindow.addSubview(picker)
         picker.hide(false, nil)
         isHidden = false
+        
+        delegate?.datePickerDidBeginPicking()
     }
     
     public static func finish() {
@@ -107,6 +123,8 @@ public class DatePicker : UIView {
         isHidden = true
         completion(pickerView.date)
         picker.hide(true)
+        
+        delegate?.datePickerDidEndPicking()
     }
     
     //MARK: - UI
@@ -123,7 +141,7 @@ public class DatePicker : UIView {
     
     //MARK: - Animation
     
-    func hide(_ hide:Bool, _ completion:((Bool) -> Void)? = nil) {
+    private func hide(_ hide:Bool, _ completion:((Bool) -> Void)? = nil) {
         
         let screenHeight = keyWindow.frame.size.height
         let newPosition =
@@ -138,7 +156,7 @@ public class DatePicker : UIView {
     
     //MARK: - Actions
     
-    func didPressDoneButton() {
+    @objc private func didPressDoneButton() {
         
         _onFinishPicking?()
         DatePicker.finish()
