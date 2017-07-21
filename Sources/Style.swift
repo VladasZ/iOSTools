@@ -45,9 +45,10 @@ public class Style {
     public var textAlignment:    NSTextAlignment?
     public var shadow:           Shadow?
     
-    public init(id: String) {
+    public init(id: String, _ initializer: ((Style) -> ())? = nil) {
         
         identifier = id
+        initializer?(self)
         Style.styles.append(self)
     }
 }
