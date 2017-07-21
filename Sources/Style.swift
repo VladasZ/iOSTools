@@ -10,11 +10,11 @@ import UIKit
 
 public struct Shadow {
     
-    var offset: CGSize
-    var radius: CGFloat
-    var opacity: CGFloat
+    public var offset: CGSize
+    public var radius: CGFloat
+    public var opacity: CGFloat
     
-    init(offset: CGSize = CGSize.zero, radius: CGFloat = 0, opacity: CGFloat = 0) {
+    public init(offset: CGSize = CGSize.zero, radius: CGFloat = 0, opacity: CGFloat = 0) {
         
         self.offset = offset
         self.radius = radius
