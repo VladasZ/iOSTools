@@ -8,6 +8,20 @@
 
 import UIKit
 
+public struct Shadow {
+    
+    var offset: CGSize
+    var radius: CGFloat
+    var opacity: CGFloat
+    
+    init(offset: CGSize = CGSize.zero, radius: CGFloat = 0, opacity: CGFloat = 0) {
+        
+        self.offset = offset
+        self.radius = radius
+        self.opacity = opacity
+    }
+}
+
 public class Style {
     
     internal static var styles = [Style]()
@@ -29,6 +43,7 @@ public class Style {
     public var textColor:        UIColor?
     public var placeholderColor: UIColor?
     public var textAlignment:    NSTextAlignment?
+    public var shadow:           Shadow?
     
     public init(id: String) {
         

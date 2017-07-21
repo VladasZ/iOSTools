@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 import SwiftyTools
 
 fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
@@ -89,6 +90,13 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
             
             label.textAlignment = textAlignment
         }
+    }
+    
+    if let shadow = style.shadow {
+        
+        view.layer.shadowOffset  = shadow.offset
+        view.layer.shadowRadius  = shadow.radius
+        view.layer.shadowOpacity = Float(shadow.opacity)
     }
 }
 
