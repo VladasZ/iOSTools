@@ -98,6 +98,11 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
         view.layer.shadowRadius  = shadow.radius
         view.layer.shadowOpacity = Float(shadow.opacity)
     }
+    
+    if let customCode = style.customCode {
+        
+        customCode(view)
+    }
 }
 
 public extension UIView {

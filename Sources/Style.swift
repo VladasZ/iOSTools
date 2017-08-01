@@ -44,6 +44,7 @@ public class Style {
     public var placeholderColor: UIColor?
     public var textAlignment:    NSTextAlignment?
     public var shadow:           Shadow?
+    public var customCode:       ((UIView) -> ())?
     
     public init(id: String, _ initializer: ((Style) -> ())? = nil) {
         
