@@ -10,14 +10,14 @@ import UIKit
 
 //https://stackoverflow.com/questions/3476646/uilabel-text-margin
 
-@IBDesignable class InsetLabel: UILabel {
+@IBDesignable public class InsetLabel: UILabel {
     
-    @IBInspectable var topInset: CGFloat = 0.0
-    @IBInspectable var leftInset: CGFloat = 0.0
-    @IBInspectable var bottomInset: CGFloat = 0.0
-    @IBInspectable var rightInset: CGFloat = 0.0
+    @IBInspectable public var topInset: CGFloat = 0.0
+    @IBInspectable public var leftInset: CGFloat = 0.0
+    @IBInspectable public var bottomInset: CGFloat = 0.0
+    @IBInspectable public var rightInset: CGFloat = 0.0
     
-    var insets: UIEdgeInsets {
+    public var insets: UIEdgeInsets {
         get {
             return UIEdgeInsetsMake(topInset, leftInset, bottomInset, rightInset)
         }
@@ -29,11 +29,11 @@ import UIKit
         }
     }
     
-    override func drawText(in rect: CGRect) {
+    public override func drawText(in rect: CGRect) {
         super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
     }
     
-    override func sizeThatFits(_ size: CGSize) -> CGSize {
+    public override func sizeThatFits(_ size: CGSize) -> CGSize {
         var adjSize = super.sizeThatFits(size)
         adjSize.width += leftInset + rightInset
         adjSize.height += topInset + bottomInset
@@ -41,7 +41,7 @@ import UIKit
         return adjSize
     }
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         var contentSize = super.intrinsicContentSize
         contentSize.width += leftInset + rightInset
         contentSize.height += topInset + bottomInset
