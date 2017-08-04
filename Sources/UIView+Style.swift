@@ -66,7 +66,7 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
             textView.textColor = textColor
         }
         else if let button = view as? UIButton {
-            button.titleLabel?.textColor = textColor
+            button.setTitleColor(textColor, for: .normal)
         }
     }
     
