@@ -36,6 +36,17 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     
     public static var controller: UIViewController?
     
+    private static var _lastImageName: String?
+    public static var lastImageName: String? {
+        set { _lastImageName = newValue }
+        get {
+        
+            let name = _lastImageName
+            _lastImageName = nil
+            return name
+        }
+    }
+    
     private static var topController: UIViewController {
         
         if let controller = controller { return controller }
