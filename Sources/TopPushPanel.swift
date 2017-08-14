@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyTools
 
-public class TopPushPanel {
+open class TopPushPanel {
     
     //MARK: - Properties
     
