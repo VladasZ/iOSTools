@@ -10,7 +10,7 @@ import UIKit
 
 public extension String {
     
-    public func attributed(font: UIFont? = nil, color: UIColor = UIColor.black, underlined: Bool = false) -> NSMutableAttributedString {
+    public func attributed(font: UIFont? = nil, color: UIColor? = nil, underlined: Bool = false, crossed: Bool = false) -> NSMutableAttributedString {
         
         var attributes = [String : Any]()
         
@@ -18,10 +18,18 @@ public extension String {
             attributes[NSFontAttributeName] = font
         }
         
-        attributes[NSForegroundColorAttributeName] = color
-
+        if let color = color {
+            
+            attributes[NSForegroundColorAttributeName] = color
+        }
+        
         if underlined {
             attributes[NSUnderlineStyleAttributeName] = NSUnderlineStyle.styleSingle.rawValue
+        }
+        
+        if crossed {
+            
+            attributes[NSStrikethroughStyleAttributeName] = 2
         }
         
         return NSMutableAttributedString(string: self, attributes: attributes)
