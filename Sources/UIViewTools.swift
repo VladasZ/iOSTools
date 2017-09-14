@@ -36,3 +36,20 @@ public extension UIView {
         }
     }
 }
+
+//MARK: - XIB images
+
+public extension UIView {
+    
+    static func imageForXIB(_ name: String) -> UIImage? {
+        
+        let bundle = Bundle(for: self)
+        return UIImage(named: name, in: bundle, compatibleWith: nil)
+    }
+    
+    func imageForXIB(_ name: String) -> UIImage? {
+        
+        let bundle = Bundle(for: type(of: self))
+        return UIImage(named: name, in: bundle, compatibleWith: nil)
+    }
+}
