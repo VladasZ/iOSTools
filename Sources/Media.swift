@@ -165,11 +165,11 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     
     private static func checkCameraPermission(_ success: @escaping () -> ()) {
         
-        if AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) ==  AVAuthorizationStatus.authorized {
+        if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized {
             success()
         }
         else {
-            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { (granted :Bool) -> Void in
+            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted :Bool) -> Void in
                 if granted == true { success() }
                 else   { requestCameraAccess() }
             });

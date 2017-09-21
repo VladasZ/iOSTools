@@ -12,24 +12,24 @@ public extension String {
     
     public func attributed(font: UIFont? = nil, color: UIColor? = nil, underlined: Bool = false, crossed: Bool = false) -> NSMutableAttributedString {
         
-        var attributes = [String : Any]()
+        var attributes = [NSAttributedStringKey : Any]()
         
         if let font = font {
-            attributes[NSFontAttributeName] = font
+            attributes[NSAttributedStringKey.font] = font
         }
         
         if let color = color {
             
-            attributes[NSForegroundColorAttributeName] = color
+            attributes[NSAttributedStringKey.foregroundColor] = color
         }
         
         if underlined {
-            attributes[NSUnderlineStyleAttributeName] = NSUnderlineStyle.styleSingle.rawValue
+            attributes[NSAttributedStringKey.underlineStyle] = NSUnderlineStyle.styleSingle.rawValue
         }
         
         if crossed {
             
-            attributes[NSStrikethroughStyleAttributeName] = 2
+            attributes[NSAttributedStringKey.strikethroughStyle] = 2
         }
         
         return NSMutableAttributedString(string: self, attributes: attributes)

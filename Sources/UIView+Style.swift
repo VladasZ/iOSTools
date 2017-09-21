@@ -76,7 +76,7 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
             
             let placeholderText = textField.placeholder ?? ""
             textField.attributedPlaceholder = NSAttributedString(string: placeholderText,
-                                                                 attributes: [NSForegroundColorAttributeName : placeholderColor])
+                                                                 attributes: [NSAttributedStringKey.foregroundColor : placeholderColor])
         }
     }
     
