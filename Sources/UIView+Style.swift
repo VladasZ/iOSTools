@@ -99,6 +99,11 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
         view.layer.shadowOpacity = Float(shadow.opacity)
     }
     
+    if let interactionEnabled = style.isUserInteractionEnabled {
+        
+        view.isUserInteractionEnabled = interactionEnabled
+    }
+    
     if let customCode = style.customCode {
         
         customCode(view)
