@@ -25,7 +25,8 @@ public var topmostController: UIViewController {
 
 public var keyWindow: UIView {
     
-    guard let window = UIApplication.shared.keyWindow
+    guard let _window = UIApplication.shared.delegate?.window,
+        let window = _window
         else { Log.error(); return UIView() }
     
     return window
