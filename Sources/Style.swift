@@ -47,10 +47,11 @@ public struct Style {
     public var isUserInteractionEnabled: Bool?
     public var customCode:       ((UIView) -> ())?
     
-    public init(id: String, _ initializer: ((Style) -> ())? = nil) {
+    public init(id: String, _ initializer: ((inout Style) -> ())? = nil) {
         
         identifier = id
-        initializer?(self)
+        initializer?(&self)
         Style.styles.append(self)
     }
 }
+
