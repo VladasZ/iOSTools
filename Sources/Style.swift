@@ -22,7 +22,7 @@ public struct Shadow {
     }
 }
 
-public class Style {
+public struct Style {
     
     internal static var styles = [Style]()
     
