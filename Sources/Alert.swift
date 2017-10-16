@@ -23,7 +23,7 @@ public struct Alert {
     public static var cancelLabel: String = "Cancel"
     public static var agreeLabel:  String = "OK"
     public static var errorLabel:  String = "Error"
-    
+        
     public static func show(_ message:String, configuration: AlertConfigurationBlock = nil, _ agreeAction: (() -> ())? = nil) {
         
         let conf = AlertConfiguration()
