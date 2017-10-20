@@ -16,8 +16,8 @@ fileprivate func viewWithSize<T>(_ size: CGSize) -> T where T: IBDesignableView 
 @IBDesignable
 open class IBDesignableView : UIView {
     
-    public class var defaultSize: CGSize { return CGSize(width: 100, height: 100) }
-    
+    open class var defaultSize: CGSize { return CGSize(width: 100, height: 100) }
+
     public class func fromNib() -> Self { return viewWithSize(defaultSize) }
     
     private static var identifier: String { return String(describing: self) }
