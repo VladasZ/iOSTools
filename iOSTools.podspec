@@ -8,6 +8,6 @@ s.source         = { :git => 'https://github.com/VladasZ/iOSTools.git', :tag => 
 s.ios.deployment_target = '9.0'
 s.source_files   = 'Sources/**/*.swift'
 s.license        = 'MIT'
-s.resources      = ['Sources/*.xib']
+s.resources      = ['Sources/UI/Views/SwipyImageView/*.xib']
 s.dependency 'SwiftyTools'
 end
