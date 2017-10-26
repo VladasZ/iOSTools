@@ -259,7 +259,6 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         
         photoDialog.addAction(UIAlertAction(title: cancelCaption, style: .cancel) { _ in clearCompletions() })
         
-    
     }
 }
 
