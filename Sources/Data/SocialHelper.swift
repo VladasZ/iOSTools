@@ -38,16 +38,15 @@ class SocialHelper {
         guard let url = URL(string: applicationURL + account) else { return }
         
         if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.openURL(url)
+            System.openURL(url)
             return
         }
         
-        guard let browserUrl = URL(string: browserURL + account) else {
-            
-            Alert.error("Wrong url")
+        guard let browserURL = URL(string: browserURL + account) else {
+            Alert.error("Wrong URL")
             return
         }
         
-        UIApplication.shared.openURL(browserUrl)
+        System.openURL(browserURL)
     }
 }

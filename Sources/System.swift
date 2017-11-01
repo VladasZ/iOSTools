@@ -37,4 +37,15 @@ public class System {
     public static func vibrate() {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
+    
+    public static func openURL(_ url: URL?) {
+        guard let url = url else { Log.error("No URL"); return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+
+    public static func openURL(_ urlString: String?) {
+        guard let urlString = urlString else { Log.error("No URL string"); return }
+        guard let url = URL(string: urlString) else { Log.error("Invalid URL"); return }
+        openURL(url)
+    }
 }

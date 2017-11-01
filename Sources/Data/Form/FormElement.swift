@@ -178,11 +178,11 @@ public class FormElement {
         }
         
         if let maxLength = _maxLength {
-            if (source.value ?? "").characters.count > maxLength { return .tooLong(self) }
+            if (source.value ?? "").count > maxLength { return .tooLong(self) }
         }
         
         if let minLength = _minLength {
-            if (source.value ?? "").characters.count < minLength { return .tooShort(self) }
+            if (source.value ?? "").count < minLength { return .tooShort(self) }
         }
         
         if let equalElement = _mustBeEqualElement {
@@ -191,7 +191,7 @@ public class FormElement {
         
         if let exactLength = _exactLength {
             
-            if value.characters.count != exactLength { return .invalidLength(self) }
+            if value.count != exactLength { return .invalidLength(self) }
         }
         
         return nil

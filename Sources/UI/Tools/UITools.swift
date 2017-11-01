@@ -37,7 +37,7 @@ func openSettings() {
     guard let settingsURL = URL(string: UIApplicationOpenSettingsURLString)
         else { Log.error(); return }
     
-    UIApplication.shared.openURL(settingsURL)
+    System.openURL(settingsURL)
 }
 
 public extension UIView {
