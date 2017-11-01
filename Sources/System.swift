@@ -40,7 +40,11 @@ public class System {
     
     public static func openURL(_ url: URL?) {
         guard let url = url else { Log.error("No URL"); return }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
     }
 
     public static func openURL(_ urlString: String?) {
