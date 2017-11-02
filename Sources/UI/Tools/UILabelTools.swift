@@ -7,11 +7,21 @@
 //
 
 import UIKit
+import SwiftyTools
 
 public extension UILabel {
     
+    public var lineSpacing: CGFloat { get { Log.warning(); return 0 }
+        set {
+            let style = NSMutableParagraphStyle()
+            style.lineSpacing = newValue
+            style.alignment = textAlignment
+            attributedText = NSAttributedString(string: self.text ?? "",
+                                                attributes: [NSAttributedStringKey.paragraphStyle : style])
+        }
+    }
+    
     public func rectForString(_ string: String) -> CGRect? {
-        
         guard let nsText = text as NSString? else { return nil }
         let range = nsText.range(of: string)
         guard let rect = rectForCharacterRange(range: range) else { return nil }
@@ -20,20 +30,15 @@ public extension UILabel {
     }
     
     public func rectForCharacterRange(range: NSRange) -> CGRect? {
-        
         guard let attributedText = attributedText else { return nil }
-        
         var glyphRange = NSRange()
         let layoutManager = NSLayoutManager()
         let textStorage = NSTextStorage(attributedString: attributedText)
         textStorage.addLayoutManager(layoutManager)
-        
         let textContainer = NSTextContainer(size: bounds.size)
         textContainer.lineFragmentPadding = 0.0
-        
         layoutManager.addTextContainer(textContainer)
         layoutManager.characterRange(forGlyphRange: range, actualGlyphRange: &glyphRange)
-        
         return layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
     }
 }
