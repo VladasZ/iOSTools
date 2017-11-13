@@ -41,4 +41,14 @@ public extension UILabel {
         layoutManager.characterRange(forGlyphRange: range, actualGlyphRange: &glyphRange)
         return layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
     }
+    
+    public func appendImage(_ image: UIImage, bounds: CGRect? = nil) {
+        let attachment = NSTextAttachment()
+        attachment.image = image
+        if let bounds = bounds { attachment.bounds = bounds }
+        let attachmentString = NSAttributedString(attachment: attachment)
+        let nameString = NSMutableAttributedString(string: "\(self.text ?? "") ")
+        nameString.append(attachmentString)
+        attributedText = nameString
+    }
 }
