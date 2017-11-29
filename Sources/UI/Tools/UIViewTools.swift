@@ -12,12 +12,10 @@ import SwiftyTools
 public extension UIView {
     
     func removeAllSubviews() {
-        
         subviews.forEach { $0.removeFromSuperview() }
     }
     
     func addTransparentBlur(style: UIBlurEffectStyle = .light) {
-        
         //http://stackoverflow.com/questions/17041669/creating-a-blurring-overlay-view
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             self.backgroundColor = UIColor.clear
@@ -42,14 +40,25 @@ public extension UIView {
 public extension UIView {
     
     static func imageForXIB(_ name: String) -> UIImage? {
-        
         let bundle = Bundle(for: self)
         return UIImage(named: name, in: bundle, compatibleWith: nil)
     }
     
     func imageForXIB(_ name: String) -> UIImage? {
-        
         let bundle = Bundle(for: type(of: self))
         return UIImage(named: name, in: bundle, compatibleWith: nil)
+    }
+}
+
+public extension UIView {
+    
+    class var className: String { return String(describing: self) }
+    
+    class func fromXib() -> Self? {
+        return _fromXib()
+    }
+    
+    private class func _fromXib<T: UIView>() -> T? {
+        return UINib(nibName: className, bundle: Bundle(for: self)).instantiate(withOwner: nil, options: nil)[0] as? T
     }
 }

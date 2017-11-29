@@ -42,11 +42,9 @@ open class TopPushPanel {
     }
     
     public static func dismiss() {
-        
-        UIView.animate(withDuration: animationDuration, animations: { view.y = -height  }, completion: { _ in
-            
+        UIView.animate(withDuration: animationDuration, animations: { view.y = -height  }){ _ in
             view.isHidden = true
             isVisible = false
-        })
+        }
     }
 }
