@@ -12,7 +12,8 @@ open class CustomAlertView : UIView  {
     
     open class func getView() -> Self { return fromXib()! }
     open class var sideMargin: CGFloat { return 50 }
-    
+    open class var height: CGFloat { return keyWindow.frame.height * (2 / 3) }
+
     open class var buttonTitles: [String]? { return nil }
     open class var buttonActions: ((CustomIOSAlertView?, Int32) -> ())? { return nil }
     
@@ -24,6 +25,7 @@ open class CustomAlertView : UIView  {
         view.layer.cornerRadius = 8
         alert = CustomIOSAlertView()!
         view.width = keyWindow.frame.size.width - sideMargin
+        view.height = CustomAlertView.height
         alert.buttonTitles = self.buttonTitles
         alert.containerView = view
         alert.onButtonTouchUpInside = self.buttonActions
