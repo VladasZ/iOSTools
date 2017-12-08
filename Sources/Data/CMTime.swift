@@ -6,6 +6,8 @@
 //  Copyright © 2017 VladasZ. All rights reserved.
 //
 
+#if os(iOS)
+
 import AVFoundation
 
 fileprivate let hourMinTimeFormatter = DateFormatter("HH:mm")
@@ -19,3 +21,5 @@ public extension CMTime {
     }
     
 }
+
+#endif
