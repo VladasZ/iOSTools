@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyTools
 
-extension UIImage {
+public extension UIImage {
     
     static func draw(_ width: CGFloat, _ height: CGFloat, _ drawingBlock: (_ ctx: CGContext) -> ()) -> UIImage {
         UIGraphicsBeginImageContext(CGSize(width, height))

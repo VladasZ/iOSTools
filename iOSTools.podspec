@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name           = 'iOSTools'
-s.version        = '0.8.1'
+s.version        = '0.8.2'
 s.summary        = "iOS tools kit to make your life easier."
 s.homepage       = "https://github.com/VladasZ/iOSTools"
 s.author         = { 'Vladas Zakrevskis' => '146100@gmail.com' }
@@ -15,8 +15,6 @@ s.source_files   = 'Sources/Common/**/*.swift'
 
 s.watchos.source_files   = 'Sources/watchOS/**/*.swift'
 s.ios.source_files       = 'Sources/iOS/**/*.swift'
-
-
 
 s.license            = 'MIT'
 s.ios.resources      = ['Sources/iOS/Views/SwipyImageView/*.xib',
