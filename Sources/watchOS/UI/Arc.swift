@@ -24,6 +24,8 @@ public class Arc {
     
     public let center = System.controllerSize.pixels.center
     
+    public init() { }
+    
     public var path: UIBezierPath {
         
         let path = UIBezierPath()
