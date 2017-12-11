@@ -19,4 +19,8 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return image
     }
+    
+    static func draw(_ size: CGSize, _ drawingBlock: (_ ctx: CGContext) -> ()) -> UIImage {
+        return draw(size.width, size.height, drawingBlock)
+    }
 }

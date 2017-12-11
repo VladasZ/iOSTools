@@ -34,7 +34,6 @@ public enum WatchModel : CustomStringConvertible {
 public extension CGSize {
     var pixels: CGSize { return CGSize(System.device.screenScale * System.screenSize.width,
                                        System.device.screenScale * System.screenSize.height) }
-    var center: CGPoint { return CGPoint(width / 2, height / 2) }
 }
 
 public class System {

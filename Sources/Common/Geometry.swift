@@ -26,6 +26,8 @@ public extension CGSize {
     init(_ width: CGFloat, _ height: CGFloat) {
         self.init(width:width, height:height)
     }
+    
+    var center: CGPoint { return CGPoint(width / 2, height / 2) }
 }
 
 public extension CGRect {

@@ -35,36 +35,16 @@ class CircleProgressView {
     }
 
     func setup() {
-        imageView.setImage(drawImage())
+        imageView.setImage(arc.drawImage())
     }
     
     func setupValue() {
-        if value > 1 { value -= 1; return }
-        if value < 0 { value += 1; return }
-        arc.endAngle = Arc.topPoint + CGFloat.pi * 2 * value
-        imageView.setImage(drawImage())
+
+        arc.value = value
+        imageView.setImage(arc.drawImage())
     }
     
-    private func drawImage() -> UIImage {
-        return UIImage.draw(size.width, size.height) { ctx in
-            
-            let rect = CGRect(0, 0, size.width, size.height)
-            
-            ctx.draw(#imageLiteral(resourceName: "grad").cgImage!, in: rect)
-            ctx.addPath(arc.path.cgPath)
-            ctx.addRect(rect)
-            ctx.setFillColor(UIColor.black.cgColor)
-            ctx.drawPath(using: .eoFill)
-            
-            ctx.addEllipse(in: CGRect(center: arc.endCenter, width: 50, height: 50))
-            ctx.setFillColor(UIColor.blue.cgColor)
-            ctx.fillPath()
-            
-            ctx.addEllipse(in: CGRect(center: arc.endCenter, width: 45, height: 45))
-            ctx.setFillColor(UIColor.white.cgColor)
-            ctx.fillPath()
-        }
-    }
+
 }
 
 #endif
