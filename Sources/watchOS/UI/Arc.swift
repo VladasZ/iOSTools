@@ -10,21 +10,21 @@
 
 import WatchKit
 
-class Arc {
+public class Arc {
     
-    static let topPoint: CGFloat = 0 - CGFloat.pi / 2
+    public static let topPoint: CGFloat = 0 - CGFloat.pi / 2
     
-    var startAngle: CGFloat = Arc.topPoint
-    var endAngle:   CGFloat = CGFloat.pi
-    var radius:     CGFloat = 120
-    var width:      CGFloat = 10
+    public var startAngle: CGFloat = Arc.topPoint
+    public var endAngle:   CGFloat = CGFloat.pi
+    public var radius:     CGFloat = 120
+    public var width:      CGFloat = 10
     
-    var innerRadius: CGFloat { return radius - width }
+    private var innerRadius: CGFloat { return radius - width }
     var endCenter: CGPoint { return midpointForAngle(endAngle, center: center) }
     
-    let center = System.controllerSize.pixels.center
+    public let center = System.controllerSize.pixels.center
     
-    var path: UIBezierPath {
+    public var path: UIBezierPath {
         
         let path = UIBezierPath()
         
