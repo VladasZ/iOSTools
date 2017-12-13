@@ -27,7 +27,7 @@ class CircleProgressView {
 
     private var imageView: WKInterfaceImage
     private let size = System.renderImageSize
-    private var arc = Arc()
+    private var arc = ArcProgress()
         
     init(imageView: WKInterfaceImage) {
         self.imageView = imageView

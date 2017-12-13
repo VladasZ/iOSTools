@@ -1,5 +1,5 @@
 //
-//  Arc.swift
+//  ArcProgress.swift
 //  watchTest WatchKit Extension
 //
 //  Created by Vladas Zakrevskis on 11/30/17.
@@ -9,12 +9,15 @@
 import UIKit
 import SwiftyTools
 
-public class Arc {
+
+
+
+
+public class ArcProgress {
     
     private static let topPoint: CGFloat = 0 - CGFloat.pi / 2
     
-    private var innerRadius: CGFloat { return radius - width }
-    private var startAngle: CGFloat = Arc.topPoint
+    private var startAngle: CGFloat = ArcProgress.topPoint
     private var endAngle:   CGFloat = CGFloat.pi
     private var angleSpan: CGFloat { return maxAngle - minAngle }
     
@@ -25,8 +28,9 @@ public class Arc {
     
     public var radius:   CGFloat = 90
     public var width:    CGFloat = 10
-    public var minAngle: CGFloat = Arc.topPoint
-    public var maxAngle: CGFloat = 0
+    
+    public var minAngle: CGFloat = ArcProgress.topPoint
+    public var maxAngle: CGFloat = CGFloat.pi
     
     public var value: CGFloat = 0.5 { didSet { setupValue() } }
     
@@ -36,59 +40,25 @@ public class Arc {
     public var backgroundImage: UIImage?
     public var fillColor: UIColor = UIColor.blue
     public var backgroundColor: UIColor = UIColor.lightGray
+    
+    public var position: ArcPosition? {
+        didSet {
+            if let position = position {
+                minAngle = position.points.0
+                maxAngle = position.points.1
+            }
+        }
+    }
 
     public init() { }
     
-    private func pathWithStartAngle(_ startAngle: CGFloat, _ endAngle: CGFloat) -> UIBezierPath {
-        
-        let path = UIBezierPath()
-        
-        // Outer Arc
-        
-        path.addArc(withCenter: center,
-                    radius: radius,
-                    startAngle: startAngle,
-                    endAngle: endAngle,
-                    clockwise: true)
-        
-        // Left Cap
-        
-        path.addArc(withCenter: midpointForAngle(endAngle, center: center),
-                    radius: width / 2,
-                    startAngle: endAngle,
-                    endAngle: endAngle - CGFloat.pi,
-                    clockwise: true)
-        
-        // Inner Arc
-        
-        path.addArc(withCenter: center,
-                    radius: innerRadius,
-                    startAngle: endAngle,
-                    endAngle: startAngle,
-                    clockwise: false)
-        
-        // Right Cap
-        
-        path.addArc(withCenter: midpointForAngle(startAngle, center: center),
-                    radius: width / 2,
-                    startAngle: startAngle,
-                    endAngle: startAngle - CGFloat.pi,
-                    clockwise: false)
-        
-        return path
-    }
-    
-    public var path: UIBezierPath { return pathWithStartAngle(startAngle, endAngle) }
-    
-    private var backgroundPath: UIBezierPath { return pathWithStartAngle(maxAngle, -minAngle) }
-    
     public func drawImage() -> UIImage {
         return UIImage.draw(renderSize.width, renderSize.height) { ctx in
-            self.drawInContext(ctx)
+            self.drawInContextt(ctx)
         }
     }
     
-    public func drawInContext(_ ctx: CGContext) {
+    public func drawInContextt(_ ctx: CGContext) {
         
         let rect = CGRect(0, 0, renderSize.width, renderSize.height)
         
@@ -99,14 +69,14 @@ public class Arc {
         }
         else {
             
-            ctx.addPath(backgroundPath.cgPath)
+            //ctx.addPath(backgroundPath.cgPath)
             ctx.setFillColor(backgroundColor.cgColor)
             ctx.fillPath()
             
             ctx.setFillColor(fillColor.cgColor)
         }
         
-        ctx.addPath(path.cgPath)
+        //ctx.addPath(path.cgPath)
         ctx.drawPath(using: .eoFill)
 
         if (!self.hasTipCap) { return }
@@ -125,18 +95,19 @@ public class Arc {
         if value < 0 { value += 1; return }
         if value > 1 { value = value.truncatingRemainder(dividingBy: 1); return }
 
-        Log.info(value)
+        Log.info("value: " + String(describing: value))
 
-        startAngle = maxAngle
-        endAngle = maxAngle + angleSpan * value
+        startAngle = 0 + CGFloat.pi
+        endAngle = CGFloat.pi
+        
+//        startAngle = maxAngle
+//        endAngle = maxAngle + angleSpan * value
     
-        Log.info(startAngle)
-        Log.info(endAngle)
+        Log.info("startAngle: " + String(describing: startAngle))
+        Log.info("endAngle: " + String(describing: endAngle))
     }
 
     private func midpointForAngle(_ angle: CGFloat, center: CGPoint) -> CGPoint {
-        let outer = CGPoint.onCircleWith(radius: radius, angle: angle, center: center)
-        let inner = CGPoint.onCircleWith(radius: innerRadius, angle: angle, center: center)
-        return outer.midPointWith(inner)
+        return CGPoint()
     }
 }
