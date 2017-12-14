@@ -13,36 +13,36 @@ import UIKit
 
 class CircleProgressView {
     
-    var value: CGFloat = 0.5 { didSet { setupValue() } }
-    
-    var radius: CGFloat {
-        get { return arc.radius }
-        set { arc.radius = newValue; setup() }
-    }
-    
-    var width: CGFloat {
-        get { return arc.width }
-        set { arc.width = newValue; setup() }
-    }
+//    var value: CGFloat = 0.5 { didSet { setupValue() } }
+//    
+//    var radius: CGFloat {
+//        get { return arc.radius }
+//        set { arc.radius = newValue; setup() }
+//    }
+//    
+//    var width: CGFloat {
+//        get { return arc.width }
+//        set { arc.width = newValue; setup() }
+//    }
+//
+//    private var imageView: WKInterfaceImage
+//    private let size = System.renderImageSize
+//    private var arc = Arc()
+//        
+//    init(imageView: WKInterfaceImage) {
+//        self.imageView = imageView
+//        setup()
+//    }
 
-    private var imageView: WKInterfaceImage
-    private let size = System.renderImageSize
-    private var arc = ArcProgress()
-        
-    init(imageView: WKInterfaceImage) {
-        self.imageView = imageView
-        setup()
-    }
-
-    func setup() {
-        imageView.setImage(arc.drawImage())
-    }
-    
-    func setupValue() {
-
-        arc.value = value
-        imageView.setImage(arc.drawImage())
-    }
+//    func setup() {
+//        imageView.setImage(arc.drawImage())
+//    }
+//
+//    func setupValue() {
+//
+//        arc.value = value
+//        imageView.setImage(arc.drawImage())
+//    }
     
 
 }

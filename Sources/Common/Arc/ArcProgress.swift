@@ -10,104 +10,57 @@ import UIKit
 import SwiftyTools
 
 
-
-
-
 public class ArcProgress {
     
-    private static let topPoint: CGFloat = 0 - CGFloat.pi / 2
+    private var backgroundArc: Arc = Arc()
+    private var progressArc: Arc = Arc()
     
-    private var startAngle: CGFloat = ArcProgress.topPoint
-    private var endAngle:   CGFloat = CGFloat.pi
-    private var angleSpan: CGFloat { return maxAngle - minAngle }
+    public var center: CGPoint = CGPoint(100, 100) { didSet { setupArcs { $0.center = center } } }
+    public var size:   CGSize  = CGSize(200, 200)  { didSet { setupArcs { $0.size   = size   } } }
+    public var width:  CGFloat = 10                { didSet { setupArcs { $0.width  = width  } } }
+    public var radius: CGFloat = 80                { didSet { setupArcs { $0.radius = radius } } }
+    public var clockwise: Bool = true              { didSet { setupProgress() } }
     
-    private var endCenter: CGPoint { return midpointForAngle(endAngle, center: center) }
-    private var center: CGPoint { return renderSize.center }
     
-    public var renderSize: CGSize = CGSize(200, 200)
+    public var backgroundColor: UIColor?
+    public var color: UIColor = UIColor.green
     
-    public var radius:   CGFloat = 90
-    public var width:    CGFloat = 10
-    
-    public var minAngle: CGFloat = ArcProgress.topPoint
-    public var maxAngle: CGFloat = CGFloat.pi
-    
-    public var value: CGFloat = 0.5 { didSet { setupValue() } }
-    
-    public var clockwise: Bool = true
-    public var hasTipCap: Bool = false
-    
-    public var backgroundImage: UIImage?
-    public var fillColor: UIColor = UIColor.blue
-    public var backgroundColor: UIColor = UIColor.lightGray
+    public var progress: CGFloat = 0.5 { didSet { setupProgress() } }
     
     public var position: ArcPosition? {
         didSet {
             if let position = position {
-                minAngle = position.points.0
-                maxAngle = position.points.1
+                backgroundArc.position = position
+                progressArc.position = position
             }
         }
     }
-
-    public init() { }
     
-    public func drawImage() -> UIImage {
-        return UIImage.draw(renderSize.width, renderSize.height) { ctx in
-            self.drawInContextt(ctx)
-        }
-    }
+    private var angleSpan: CGFloat { return abs(backgroundArc.startAngle - backgroundArc.endAngle) }
     
-    public func drawInContextt(_ ctx: CGContext) {
+    private func setupProgress() {
+        if progress < 0 { progress += 1; return }
+        if progress > 1 { progress -= 1; return }
         
-        let rect = CGRect(0, 0, renderSize.width, renderSize.height)
-        
-        if let image = self.backgroundImage {
-            ctx.draw(image.cgImage!, in: rect)
-            ctx.addRect(rect)
-            ctx.setFillColor(UIColor.black.cgColor)
+        if clockwise {
+            progressArc.endAngle = backgroundArc.endAngle - angleSpan * progress
         }
         else {
-            
-            //ctx.addPath(backgroundPath.cgPath)
-            ctx.setFillColor(backgroundColor.cgColor)
-            ctx.fillPath()
-            
-            ctx.setFillColor(fillColor.cgColor)
+            progressArc.startAngle = backgroundArc.startAngle + angleSpan * progress
+        }
+    }
+    
+    private func setupArcs(_ setup: (Arc) -> ()) {
+        setup(backgroundArc)
+        setup(progressArc)
+    }
+    
+    public func drawInContext(_ ctx: CGContext) {
+        
+        if let backColor = backgroundColor {
+            backgroundArc.drawInContext(ctx, withColor: backColor)
         }
         
-        //ctx.addPath(path.cgPath)
-        ctx.drawPath(using: .eoFill)
-
-        if (!self.hasTipCap) { return }
-        
-        ctx.addEllipse(in: CGRect(center: endCenter, width: 50, height: 50))
-        ctx.setFillColor(UIColor.blue.cgColor)
-        ctx.fillPath()
-        
-        ctx.addEllipse(in: CGRect(center: endCenter, width: 45, height: 45))
-        ctx.setFillColor(UIColor.white.cgColor)
-        ctx.fillPath()
-    }
-    
-    private func setupValue() {
-        
-        if value < 0 { value += 1; return }
-        if value > 1 { value = value.truncatingRemainder(dividingBy: 1); return }
-
-        Log.info("value: " + String(describing: value))
-
-        startAngle = 0 + CGFloat.pi
-        endAngle = CGFloat.pi
-        
-//        startAngle = maxAngle
-//        endAngle = maxAngle + angleSpan * value
-    
-        Log.info("startAngle: " + String(describing: startAngle))
-        Log.info("endAngle: " + String(describing: endAngle))
-    }
-
-    private func midpointForAngle(_ angle: CGFloat, center: CGPoint) -> CGPoint {
-        return CGPoint()
+        progressArc.drawInContext(ctx, withColor: color)
     }
 }

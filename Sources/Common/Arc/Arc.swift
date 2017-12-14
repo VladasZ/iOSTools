@@ -11,7 +11,7 @@ import SwiftyTools
 
 public enum ArcPosition {
     
-    public static var quarterMargin: CGFloat = 0.5
+    public static var quarterMargin: CGFloat = 0.0
     
     case top
     case bottom
@@ -49,15 +49,15 @@ public class Arc {
     
     public var center: CGPoint = CGPoint(100, 100)
     public var size:   CGSize  = CGSize(200, 200)
-    public var width:  CGFloat = 4
-    public var radius: CGFloat = 20
+    public var width:  CGFloat = 10
+    public var radius: CGFloat = 80
     
     public var startAngle: CGFloat = 0
     public var endAngle:   CGFloat = CGFloat.pi
     
     public var clockwise: Bool = true
     
-    var position: ArcPosition? {
+    public var position: ArcPosition? {
         didSet {
             if let position = position {
                 startAngle = position.points.0
@@ -69,7 +69,7 @@ public class Arc {
     
     private var innerRadius: CGFloat { return radius - width }
     
-    func createPath() -> UIBezierPath {
+    public func createPath() -> UIBezierPath {
         
         let path = UIBezierPath()
         
