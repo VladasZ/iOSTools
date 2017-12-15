@@ -25,6 +25,11 @@ public class ArcProgress {
     public var backgroundColor: UIColor?
     public var color: UIColor = UIColor.green
     
+    public func setColorAndDimBackground(_ color: UIColor) {
+        self.color = color
+        self.backgroundColor = color.withAlphaComponent(0.3)
+    }
+    
     public var progress: CGFloat = 0.5 { didSet { setupProgress() } }
     
     public var position: ArcPosition? {

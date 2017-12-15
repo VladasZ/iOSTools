@@ -52,8 +52,8 @@ public class Arc {
     public var width:  CGFloat = 10
     public var radius: CGFloat = 80
     
-    public var startAngle: CGFloat = 0
-    public var endAngle:   CGFloat = CGFloat.pi
+    public var startAngle: CGFloat = 0 - CGFloat.pi / 2 + 0.2
+    public var endAngle:   CGFloat = CGFloat.pi + CGFloat.pi / 2 - 0.2
     
     public var clockwise: Bool = true
     
