@@ -27,8 +27,8 @@ public class HorisontalPanel : IBDesignableView {
     
     private var titles: [String] { return delegate.horisontalPanelButtonTitles }
     
-    private var flowLayout: UICollectionViewFlowLayout {
-        return self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+    private var flowLayout: UICollectionViewFlowLayout! {
+        return self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout
     }
     
     public override func setup() {
@@ -47,11 +47,15 @@ extension HorisontalPanel : UICollectionViewDataSource {
     public func numberOfSections(in collectionView: UICollectionView) -> Int { return 1 }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if delegate == nil { return 0 }
         return titles.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if delegate == nil { return UICollectionViewCell() }
         return collectionView.getCell(HorisontalPanelCell.self, indexPath: indexPath) { cell in
+            cell.labelHeight.constant = self.height
+            cell.setNeedsLayout()
             cell.label.font = self.font
             cell.label.text = self.titles[indexPath.row]
             cell.label.textColor = self.color

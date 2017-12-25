@@ -21,6 +21,9 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVw-aT-rqO">
                         <rect key="frame" x="10" y="0.0" width="93" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="VXf-Np-JEv"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -38,6 +41,7 @@
             <size key="customSize" width="113" height="50"/>
             <connections>
                 <outlet property="label" destination="HVw-aT-rqO" id="Hlj-OD-paD"/>
+                <outlet property="labelHeight" destination="VXf-Np-JEv" id="ccL-6m-3jr"/>
             </connections>
             <point key="canvasLocation" x="-4.5" y="-174"/>
         </collectionViewCell>

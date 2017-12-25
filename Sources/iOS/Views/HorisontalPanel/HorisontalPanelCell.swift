@@ -9,5 +9,6 @@
 import UIKit
 
 class HorisontalPanelCell : UICollectionViewCell {
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet var label: UILabel!
+    @IBOutlet var labelHeight: NSLayoutConstraint!
 }
