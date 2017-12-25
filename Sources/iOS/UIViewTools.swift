@@ -47,8 +47,7 @@ public extension UIView {
     }
     
     func imageForXIB(_ name: String) -> UIImage? {
-        let bundle = Bundle(for: type(of: self))
-        return UIImage(named: name, in: bundle, compatibleWith: nil)
+        return type(of: self).imageForXIB(name)
     }
 }
 

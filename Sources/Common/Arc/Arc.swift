@@ -23,6 +23,8 @@ public enum ArcPosition {
     case botLeft
     case botRight
     
+    case full
+    
     internal var points: (CGFloat, CGFloat) {
         switch self {
         case .top, .bottom: return (0, CGFloat.pi)
@@ -31,11 +33,13 @@ public enum ArcPosition {
         case .topRight:     return (CGFloat.pi + CGFloat.pi / 2 + ArcPosition.quarterMargin, CGFloat.pi * 2 - ArcPosition.quarterMargin)
         case .botLeft:      return (CGFloat.pi / 2 + ArcPosition.quarterMargin, CGFloat.pi - ArcPosition.quarterMargin)
         case .botRight:     return (0 + ArcPosition.quarterMargin, CGFloat.pi / 2 - ArcPosition.quarterMargin)
+        case .full:         return (0 - CGFloat.pi / 2, CGFloat.pi * (3 / 2))
         }
     }
     
     internal var clockwise: Bool {
         switch self {
+        case .full:   return true
         case .top:    return false
         case .bottom: return true
         case .left:   return true

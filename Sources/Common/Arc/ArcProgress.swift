@@ -21,7 +21,6 @@ public class ArcProgress {
     public var radius: CGFloat = 80                { didSet { setupArcs { $0.radius = radius } } }
     public var clockwise: Bool = true              { didSet { setupProgress() } }
     
-    
     public var backgroundColor: UIColor?
     public var color: UIColor = UIColor.green
     

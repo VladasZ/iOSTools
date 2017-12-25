@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name           = 'iOSTools'
-s.version        = '0.8.9'
+s.version        = '0.10'
 s.summary        = "iOS tools kit to make your life easier."
 s.homepage       = "https://github.com/VladasZ/iOSTools"
 s.author         = { 'Vladas Zakrevskis' => '146100@gmail.com' }
@@ -18,8 +18,10 @@ s.ios.source_files       = 'Sources/iOS/**/*.swift'
 
 s.license            = 'MIT'
 s.ios.resources      = ['Sources/iOS/Views/SwipyImageView/*.xib',
-                    'Sources/iOS/Views/ProgressView/*.xib',
-                    'Sources/iOS/Views/BannerAlertView/*.xib']
+                        'Sources/iOS/Views/HorisontalPanel/*.xib',
+                        'Sources/iOS/Views/HorisontalPanelCell/*.xib',
+                        'Sources/iOS/Views/ProgressView/*.xib',
+                        'Sources/iOS/Views/BannerAlertView/*.xib']
                     
 s.dependency 'SwiftyTools'
 s.ios.dependency 'CustomIOSAlertView'

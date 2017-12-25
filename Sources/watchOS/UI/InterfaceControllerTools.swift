@@ -1,5 +1,5 @@
 //
-//  InterfaceControllerTools.swift
+//  MultiProgressControllerTools.swift
 //  watchTest WatchKit Extension
 //
 //  Created by Vladas Zakrevskis on 11/29/17.
