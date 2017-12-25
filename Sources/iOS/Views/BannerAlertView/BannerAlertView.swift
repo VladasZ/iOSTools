@@ -30,7 +30,7 @@ public class BannerAlertView : UIView {
             return
         }
         
-        guard let banner = UINib(nibName: "BannerAlertView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? BannerAlertView else {
+        guard let banner = UINib(nibName: "BannerAlertView", bundle: Bundle(for: self)).instantiate(withOwner: nil, options: nil)[0] as? BannerAlertView else {
             return
         }
         

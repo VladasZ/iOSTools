@@ -28,7 +28,7 @@
         class var identifier: String { return String(describing: self) }
         
         class func registerFor(_ collectionView: UICollectionView) {
-            collectionView.register(UINib(nibName: identifier, bundle: nil), forCellWithReuseIdentifier: identifier)
+            collectionView.register(UINib(nibName: identifier, bundle: Bundle(for: self)), forCellWithReuseIdentifier: identifier)
         }
     }
     

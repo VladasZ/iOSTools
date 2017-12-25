@@ -26,7 +26,7 @@ public extension UITableViewCell {
     class var identifier: String { return String(describing: self) }
     
     class func registerFor(_ tableView: UITableView) {
-        tableView.register(UINib(nibName: identifier, bundle: nil), forCellReuseIdentifier: identifier)
+        tableView.register(UINib(nibName: identifier, bundle: Bundle(for: self)), forCellReuseIdentifier: identifier)
     }
 }
 
