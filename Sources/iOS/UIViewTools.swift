@@ -6,12 +6,15 @@
 //  Copyright © 2017 VladasZ. All rights reserved.
 //
 
-#if os(iOS)
-
 import UIKit
 import SwiftyTools
 
 public extension UIView {
+    
+    func flip() {
+        layer.transform = CATransform3DConcat(layer.transform,
+                                              CATransform3DMakeRotation(CGFloat.pi,1.0,0.0,0.0))
+    }
     
     func removeAllSubviews() {
         subviews.forEach { $0.removeFromSuperview() }
@@ -64,4 +67,3 @@ public extension UIView {
     }
 }
 
-#endif
