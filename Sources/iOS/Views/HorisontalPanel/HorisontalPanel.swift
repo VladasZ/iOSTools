@@ -10,73 +10,86 @@ import UIKit
 import SwiftyTools
 
 public protocol HorisontalPanelDelegate : class {
-    var horisontalPanelButtonTitles: [String] { get }
     func horisontalPanelDidSelectIndex(_ index: Int)
 }
 
-public class HorisontalPanel : IBDesignableView {
+public class HorisontalPanel : UIView {
     
-    @IBOutlet var collectionView: UICollectionView!
+    public var delegate: HorisontalPanelDelegate?
     
-    public var delegate: HorisontalPanelDelegate!
+    public var titles: [String] = [] { didSet { setup() } }
     public var margin: CGFloat = 10
-    public var font: UIFont = UIFont.systemFont(ofSize: 17)
+    public var font: UIFont = UIFont.systemFont(ofSize: 15)
     public var color: UIColor = UIColor.gray
     public var selectedColor: UIColor = UIColor.black
-    public var selectedIndex: Int = -1 { didSet { collectionView.reloadData() } }
     
-    private var titles: [String] { return delegate.horisontalPanelButtonTitles }
+    private var scrollView: UIScrollView!
+    private var labels: [UILabel] = []
     
-    private var flowLayout: UICollectionViewFlowLayout! {
-        return self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+    private var lastX: CGFloat {
+        if let label = labels.last { return label.maxX }
+        return 0
     }
     
-    public override func setup() {
-        HorisontalPanelCell.registerFor(collectionView)
-        if #available(iOS 10.0, *) {
-            flowLayout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
-        } else { Log.error() }
-        flowLayout.scrollDirection = .horizontal
+    private var contentWidth: CGFloat {
+        var width: CGFloat = 0
+        for title in titles {
+            width += title.sizeFor(font: font).width
+            width += margin
+        }
+        width -= margin
+        return width
     }
-}
 
-//MARK: - UICollectionViewDataSource
-
-extension HorisontalPanel : UICollectionViewDataSource {
-    
-    public func numberOfSections(in collectionView: UICollectionView) -> Int { return 1 }
-    
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if delegate == nil { return 0 }
-        return titles.count
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        initialSetup()
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if delegate == nil { return UICollectionViewCell() }
-        return collectionView.getCell(HorisontalPanelCell.self, indexPath: indexPath) { cell in
-            cell.labelHeight.constant = self.height
-            cell.setNeedsLayout()
-            cell.label.font = self.font
-            cell.label.text = self.titles[indexPath.row]
-            cell.label.textColor = self.color
-            if indexPath.row == self.selectedIndex {
-                cell.label.textColor = self.selectedColor
-            }
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        initialSetup()
+    }
+    
+    private func initialSetup() {
+        scrollView = UIScrollView(frame: frame.withZeroOrigin)
+        scrollView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        addSubview(scrollView)
+        setup()
+    }
+    
+    private func setup() {
+        
+        scrollView.removeAllSubviews()
+        scrollView.contentSize = CGSize(contentWidth, height)
+        
+        if titles.count == 0 { return }
+
+        for i in 0...titles.count - 1 {
+            
+            let title = titles[i]
+            let label = UILabel(frame: CGRect(lastX,
+                                              0,
+                                              title.sizeFor(font: font).width + margin / 2,
+                                              height))
+            label.textAlignment = .center
+            label.text = title
+            label.font = font
+            label.tag = i
+            label.isUserInteractionEnabled = true
+            label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTap(_:))))
+            label.textColor = color
+            scrollView.addSubview(label)
+            labels.append(label)
         }
     }
-}
-
-//MARK: - UICollectionViewDelegate
-
-extension HorisontalPanel : UICollectionViewDelegate {
     
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
-        delegate.horisontalPanelDidSelectIndex(indexPath.row)
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
+    @objc private func didTap(_ sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel else { Log.error(); return }
+        labels.forEach { $0.textColor = self.color }
+        label.textColor = selectedColor
+        delegate?.horisontalPanelDidSelectIndex(label.tag)
     }
 }
-

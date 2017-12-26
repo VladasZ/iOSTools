@@ -15,7 +15,6 @@ public extension UIView {
     //MARK: - Geometry
     
     var width: CGFloat {
-        
         get { return self.frame.size.width }
         set {
             var frame = self.frame
@@ -25,7 +24,6 @@ public extension UIView {
     }
     
     var height: CGFloat {
-        
         get { return self.frame.size.height }
         set {
             var frame = self.frame
@@ -35,7 +33,6 @@ public extension UIView {
     }
     
     var x: CGFloat {
-        
         get { return self.frame.origin.x }
         set {
             var frame = self.frame
@@ -45,7 +42,6 @@ public extension UIView {
     }
     
     var y: CGFloat {
-        
         get { return self.frame.origin.y }
         set {
             var frame = self.frame
@@ -53,6 +49,9 @@ public extension UIView {
             self.frame = frame
         }
     }
+    
+    var maxX: CGFloat { return frame.maxX }
+    var maxY: CGFloat { return frame.maxY }
 }
 
 #endif
