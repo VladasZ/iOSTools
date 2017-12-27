@@ -31,6 +31,10 @@ public class ArcProgress {
     
     public var progress: CGFloat = 0.5 { didSet { setupProgress() } }
     
+    public var indicatorPosition: CGPoint { return CGPoint.onCircleWith(radius: radius - width / 2,
+                                                                        angle: progressArc.endAngle,
+                                                                        center: center) }
+    
     public var position: ArcPosition? {
         didSet {
             if let position = position {

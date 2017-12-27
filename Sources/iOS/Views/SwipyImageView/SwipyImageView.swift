@@ -6,15 +6,9 @@
 //  Copyright © 2017 Vladas Zakrevskis. All rights reserved.
 //
 
-#if os(iOS)
-
 import UIKit
 
-let DOTS_SPACING:CGFloat = 9
-let DOT_SIZE:CGFloat = 8
-
 public protocol SwipyImageViewDelegate : class {
-    
     func swipyImageViewDidSelectImage(_ index: Int)
 }
 
@@ -22,19 +16,24 @@ public class SwipyImageView : IBDesignableView, UIScrollViewDelegate {
     
     //MARK: - Outlets
     
-    @IBOutlet public var scrollView: UIScrollView!
-    @IBOutlet public var stackViewWidth: NSLayoutConstraint!
-    @IBOutlet public var stackView: UIStackView!
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var stackViewWidth: NSLayoutConstraint!
+    @IBOutlet private var stackView: UIStackView!
     
     //MARK: - Properties
     
     @IBInspectable public var selectedColor: UIColor! = UIColor.white
     @IBInspectable public var notSelectedColor: UIColor! = UIColor.gray
     
+    @IBInspectable public var dotSpacing: CGFloat = 9
+    @IBInspectable public var dotSize: CGFloat = 8
+    
     public var delegate: SwipyImageViewDelegate?
     
+    override public var contentMode: UIViewContentMode
+        { didSet { imageViews.forEach { $0.contentMode = contentMode } } }
+    
     private var dots = [UIView]()
-    public var imageViews = [UIImageView]()
     
     private var expectedIndex:Int {
         get {
@@ -42,8 +41,11 @@ public class SwipyImageView : IBDesignableView, UIScrollViewDelegate {
         }
     }
     
-    @IBInspectable public var imagesCount: Int = 0 {
+    private var imageViews = [UIImageView]()
+    private var imagesCount: Int = 0 {
         didSet {
+            
+            scrollView.removeAllSubviews()
             
             if imagesCount == 0 { return }
             
@@ -74,16 +76,25 @@ public class SwipyImageView : IBDesignableView, UIScrollViewDelegate {
         }
     }
     
+    public var images: [UIImage] = [] {
+        didSet {
+            imagesCount = images.count
+            for i in 0...images.count - 1 {
+                imageViews[i].image = images[i]
+            }
+        }
+    }
+    
     private func calculateStackWidth() -> CGFloat {
         
-        let dotsSpacing = DOTS_SPACING * CGFloat(imagesCount - 1)
-        let dotsSize    = DOT_SIZE     * CGFloat(imagesCount)
+        let dotsSpacing = dotSpacing * CGFloat(imagesCount - 1)
+        let dotsSize    = dotSize    * CGFloat(imagesCount)
         return dotsSpacing + dotsSize
     }
     
     private var newDot:UIView {
         
-        let dot = UIView(frame: CGRect(x:0, y:0, width: DOT_SIZE, height: DOT_SIZE))
+        let dot = UIView(frame: CGRect(x:0, y:0, width: dotSize, height: dotSize))
         dot.circle()
         dot.backgroundColor = notSelectedColor
         
@@ -120,5 +131,3 @@ public class SwipyImageView : IBDesignableView, UIScrollViewDelegate {
         delegate?.swipyImageViewDidSelectImage(expectedIndex)
     }
 }
-
-#endif

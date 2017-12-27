@@ -13,7 +13,7 @@ public extension UIView {
     
     func flip() {
         layer.transform = CATransform3DConcat(layer.transform,
-                                              CATransform3DMakeRotation(CGFloat.pi,1.0,0.0,0.0))
+                                              CATransform3DMakeRotation(CGFloat.pi, 1.0, 0.0, 0.0))
     }
     
     func removeAllSubviews() {
@@ -23,7 +23,7 @@ public extension UIView {
     func addTransparentBlur(style: UIBlurEffectStyle = .light) {
         //http://stackoverflow.com/questions/17041669/creating-a-blurring-overlay-view
         if !UIAccessibilityIsReduceTransparencyEnabled() {
-            self.backgroundColor = UIColor.clear
+            backgroundColor = UIColor.clear
             
             let blurEffect = UIBlurEffect(style: style)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -31,11 +31,11 @@ public extension UIView {
             blurEffectView.frame = self.bounds
             blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
-            self.insertSubview(blurEffectView, at: 0)
+            insertSubview(blurEffectView, at: 0)
         }
         else {
             Log.warning()
-            self.backgroundColor = UIColor.clear
+            backgroundColor = UIColor.clear
         }
     }
 }

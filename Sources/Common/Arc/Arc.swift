@@ -70,7 +70,7 @@ public class Arc {
             }
         }
     }
-    
+        
     private var innerRadius: CGFloat { return radius - width }
     
     public func createPath() -> UIBezierPath {
