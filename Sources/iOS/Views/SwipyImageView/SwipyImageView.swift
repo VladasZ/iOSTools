@@ -41,7 +41,7 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
         }
     }
     
-    private var imageViews = [UIImageView]()
+    public var imageViews = [UIImageView]()
     private var imagesCount: Int = 0 {
         didSet {
             
