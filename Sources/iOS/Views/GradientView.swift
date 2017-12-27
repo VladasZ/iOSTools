@@ -11,16 +11,16 @@ import UIKit
 //Leo Dabus
 //https://stackoverflow.com/questions/24380535/how-to-apply-gradient-to-background-view-of-ios-swift-app
 
-class GradientView : UIView {
+public class GradientView : UIView {
     
-    @IBInspectable var startColor:   UIColor = .black { didSet { updateColors() }}
-    @IBInspectable var endColor:     UIColor = .white { didSet { updateColors() }}
-    @IBInspectable var startLocation: Double =   0.05 { didSet { updateLocations() }}
-    @IBInspectable var endLocation:   Double =   0.95 { didSet { updateLocations() }}
-    @IBInspectable var horizontalMode:  Bool =  false { didSet { updatePoints() }}
-    @IBInspectable var diagonalMode:    Bool =  false { didSet { updatePoints() }}
+    @IBInspectable public var startColor:   UIColor = .black { didSet { updateColors() }}
+    @IBInspectable public var endColor:     UIColor = .white { didSet { updateColors() }}
+    @IBInspectable public var startLocation: Double =   0.05 { didSet { updateLocations() }}
+    @IBInspectable public var endLocation:   Double =   0.95 { didSet { updateLocations() }}
+    @IBInspectable public var horizontalMode:  Bool =  false { didSet { updatePoints() }}
+    @IBInspectable public var diagonalMode:    Bool =  false { didSet { updatePoints() }}
     
-    override class var layerClass: AnyClass { return CAGradientLayer.self }
+    override public class var layerClass: AnyClass { return CAGradientLayer.self }
     
     var gradientLayer: CAGradientLayer { return layer as! CAGradientLayer }
     
@@ -40,7 +40,7 @@ class GradientView : UIView {
         gradientLayer.colors    = [startColor.cgColor, endColor.cgColor]
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         updatePoints()
         updateLocations()
