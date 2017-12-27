@@ -11,8 +11,7 @@ import UIKit
 //Leo Dabus
 //https://stackoverflow.com/questions/24380535/how-to-apply-gradient-to-background-view-of-ios-swift-app
 
-@IBDesignable
-class GradientView: UIView {
+class GradientView : UIView {
     
     @IBInspectable var startColor:   UIColor = .black { didSet { updateColors() }}
     @IBInspectable var endColor:     UIColor = .white { didSet { updateColors() }}

@@ -12,7 +12,7 @@ public protocol SwipyImageViewDelegate : class {
     func swipyImageViewDidSelectImage(_ index: Int)
 }
 
-public class SwipyImageView : IBDesignableView, UIScrollViewDelegate {
+public class SwipyImageView : XibView, UIScrollViewDelegate {
     
     //MARK: - Outlets
     

@@ -1,23 +1,21 @@
 //
-//  IBDesignableView.swift
+//  XibView.swift
 //  iOSTools
 //
-//  Created by Vladas Zakrevskis on 7/7/17.
-//  Copyright © 2017 VladasZ. All rights reserved.
+//  Created by Vladas Zakrevskis on 12/27/17.
+//  Copyright © 2017 Vladas Zakrevskis. All rights reserved.
 //
 
 import UIKit
-import SwiftyTools
 
-fileprivate func viewWithSize<T>(_ size: CGSize) -> T where T: IBDesignableView {
+fileprivate func viewWithSize<T: XibView>(_ size: CGSize) -> T{
     return T(frame: CGRect(0, 0, size.width, size.height))
 }
 
-@IBDesignable
-open class IBDesignableView : UIView {
+open class XibView : UIView {
     
     open class var defaultSize: CGSize { return CGSize(width: 100, height: 100) }
-
+    
     public class func fromNib() -> Self { return viewWithSize(defaultSize) }
     
     private static var identifier: String { return String(describing: self) }
@@ -32,7 +30,7 @@ open class IBDesignableView : UIView {
     }
     
     public required init?(coder aDecoder: NSCoder) {
-                
+        
         super.init(coder: aDecoder)
         addSubview(loadFromXib())
     }
@@ -52,4 +50,3 @@ open class IBDesignableView : UIView {
         
     }
 }
-
