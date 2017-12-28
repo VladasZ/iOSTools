@@ -9,7 +9,7 @@
 import WatchKit
 import SwiftyTools
 
-extension UIColor {
+public extension UIColor {
     
     static var buttonGray:  UIColor { return UIColor( 45,  45,  48) }
     static var buttonBlue:  UIColor { return UIColor(109, 174, 250) }
@@ -17,17 +17,17 @@ extension UIColor {
     static var buttonRed:   UIColor { return UIColor(245,   0,  63) }
 }
 
-class RoundButton {
+public class RoundButton {
 
     private let imageView: WKInterfaceObject
     
-    var renderSize: CGFloat = 50
-    var innerCircleRadius: CGFloat = 45
-    var color: UIColor = UIColor.white { didSet { draw() } }
-    var innerIndent: CGFloat { return renderSize - innerCircleRadius }
-    var outerLineWidth: CGFloat = 2
+    public var renderSize: CGFloat = 50
+    public var innerCircleRadius: CGFloat = 45
+    public var color: UIColor = UIColor.white { didSet { draw() } }
+    public var innerIndent: CGFloat { return renderSize - innerCircleRadius }
+    public var outerLineWidth: CGFloat = 2
     
-    init(imageView: WKInterfaceObject) {
+    public init(imageView: WKInterfaceObject) {
         self.imageView = imageView
         draw()
     }

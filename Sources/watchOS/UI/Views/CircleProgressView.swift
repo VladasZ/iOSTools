@@ -8,20 +8,19 @@
 
 import WatchKit
 
-
-class CircleProgressView {
+public class CircleProgressView {
     
-    var progress: CGFloat = 0          { didSet { update() } }
-    var color: UIColor = UIColor.green { didSet { update() } }
-    var backgroundColor: UIColor?      { didSet { update() } }
-    var width: CGFloat = 10            { didSet { update() } }
+    public var progress: CGFloat = 0          { didSet { update() } }
+    public var color: UIColor = UIColor.green { didSet { update() } }
+    public var backgroundColor: UIColor?      { didSet { update() } }
+    public var width: CGFloat = 10            { didSet { update() } }
     
-    var hasIndicator: Bool = false
+    public var hasIndicator: Bool = false
     
     private let imageView: WKInterfaceImage
     private let arc = ArcProgress()
     
-    init(imageView: WKInterfaceImage) {
+    public init(imageView: WKInterfaceImage) {
         self.imageView = imageView
         draw()
     }
