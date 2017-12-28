@@ -14,6 +14,7 @@ public class CircleProgressView {
     public var color: UIColor = UIColor.green { didSet { update() } }
     public var backgroundColor: UIColor?      { didSet { update() } }
     public var width: CGFloat = 10            { didSet { update() } }
+    public var radius: CGFloat = 80           { didSet { update() } }
     
     public var hasIndicator: Bool = false
     
@@ -30,6 +31,7 @@ public class CircleProgressView {
         arc.color = color
         arc.backgroundColor = backgroundColor
         arc.width = width
+        arc.radius = radius
         draw()
     }
     
