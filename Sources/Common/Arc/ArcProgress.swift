@@ -29,6 +29,8 @@ public class ArcProgress {
         self.backgroundColor = color.withAlphaComponent(0.3)
     }
     
+    public init() { }
+    
     public var progress: CGFloat = 0.5 { didSet { setupProgress() } }
     
     public var indicatorPosition: CGPoint { return CGPoint.onCircleWith(radius: radius - width / 2,
