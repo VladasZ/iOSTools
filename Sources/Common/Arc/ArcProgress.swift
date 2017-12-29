@@ -37,12 +37,10 @@ public class ArcProgress {
                                                                         angle: progressArc.endAngle,
                                                                         center: center) }
     
-    public var position: ArcPosition? {
+    public var position: ArcPosition = .full {
         didSet {
-            if let position = position {
-                backgroundArc.position = position
-                progressArc.position = position
-            }
+            backgroundArc.position = position
+            progressArc.position = position
         }
     }
     
@@ -68,9 +66,20 @@ public class ArcProgress {
     public func drawInContext(_ ctx: CGContext) {
         
         if let backColor = backgroundColor {
-            backgroundArc.drawInContext(ctx, withColor: backColor)
+            if position == .full {
+                ctx.setFillColor(backColor.cgColor)
+                ctx.setStrokeColor(backColor.cgColor)
+                ctx.addEllipse(in: CGRect(center: backgroundArc.center,
+                                          size: backgroundArc.radius * 2 - width))
+                ctx.setLineWidth(backgroundArc.width)
+                ctx.strokePath()
+            }
+            else {
+                backgroundArc.drawInContext(ctx, withColor: backColor)
+            }
         }
         
         progressArc.drawInContext(ctx, withColor: color)
     }
 }
+
