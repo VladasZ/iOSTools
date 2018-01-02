@@ -6,12 +6,12 @@
 //  Copyright © 2017 VladasZ. All rights reserved.
 //
 
-#if os(iOS)
 
 import Foundation
 import SwiftyTools
 import AudioToolbox
 import AVFoundation
+import MessageUI
 
 public class System {
     
@@ -54,6 +54,29 @@ public class System {
         guard let url = URL(string: urlString) else { Log.error("Invalid URL"); return }
         openURL(url)
     }
+    
+    public static func sendEmail(_ email: String?) {
+        guard let email = email, email.isValidEmail
+            else { Log.error("Invalid email"); return  }
+        guard MFMailComposeViewController.canSendMail()
+            else { Log.error("Mail services are not available"); return }
+
+        let mailController = MFMailComposeViewController()
+        
+        mailController.setToRecipients([email])
+        topmostController.present(mailController)
+    }
+    
+    public static func call(_ phoneNumber: String?) {
+        guard let number = phoneNumber else { Log.error("No phone number"); return }
+        if let url = URL(string: "tel://\(number)"), UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+        else { Log.error() }
+    }
 }
 
-#endif
