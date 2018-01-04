@@ -6,17 +6,15 @@
 //  Copyright © 2017 Vladas Zakrevskis. All rights reserved.
 //
 
-#if os(iOS)
-
 import UIKit
 
 // http://stackoverflow.com/questions/808503/uibutton-making-the-hit-area-larger-than-the-default-hit-area
 
-public class ExpandedHitAreaButton : UIButton {
+open class ExpandedHitAreaButton : UIButton {
     
-    @IBInspectable public var hitArea:CGSize = CGSize(width: 100, height: 100)
+    @IBInspectable open var hitArea:CGSize = CGSize(width: 100, height: 100)
     
-    override public func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         
         if self.isHidden || !self.isUserInteractionEnabled || self.alpha < 0.01 { return nil }
         
@@ -28,5 +26,3 @@ public class ExpandedHitAreaButton : UIButton {
         return (largerFrame.contains(point)) ? self : nil
     }
 }
-
-#endif
