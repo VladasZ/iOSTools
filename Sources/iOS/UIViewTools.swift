@@ -11,6 +11,15 @@ import SwiftyTools
 
 public extension UIView {
     
+    var viewController: UIViewController? {
+        var controller: UIResponder? = self.next
+        while controller != nil {
+            if let controller = controller as? UIViewController { return controller }
+            controller = controller?.next
+        }
+        return nil
+    }
+    
     func flip() {
         layer.transform = CATransform3DConcat(layer.transform,
                                               CATransform3DMakeRotation(CGFloat.pi, 1.0, 0.0, 0.0))
