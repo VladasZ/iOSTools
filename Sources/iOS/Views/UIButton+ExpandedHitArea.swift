@@ -12,7 +12,12 @@ import UIKit
 
 open class ExpandedHitAreaButton : UIButton {
     
-    @IBInspectable open var hitArea: CGSize = CGSize(width: 100, height: 100)
+    private var _hitArea = CGSize(width: 100, height: 100)
+    
+    @IBInspectable open var hitArea: CGSize {
+        get { return _hitArea }
+        set { _hitArea = newValue }
+    }
     
     override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         

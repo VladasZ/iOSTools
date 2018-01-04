@@ -10,6 +10,13 @@ import UIKit
 
 open class BackButton : ExpandedHitAreaButton {
     
+    private var _hitArea = CGSize(50, 50)
+    
+    @IBInspectable override open var hitArea: CGSize {
+        get { return _hitArea }
+        set { _hitArea = newValue }
+    }
+    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setup()
