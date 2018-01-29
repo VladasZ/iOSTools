@@ -10,7 +10,7 @@ import HealthKit
 
 public extension HKWorkoutSession {
     
-    class func create(_ conf: (HKWorkoutConfiguration) -> ())  -> HKWorkoutSession? {
+    class func create(_ conf: (HKWorkoutConfiguration) -> ()) -> HKWorkoutSession? {
         let workoutConfiguration = HKWorkoutConfiguration()
         conf(workoutConfiguration)
         return try? HKWorkoutSession(configuration: workoutConfiguration)

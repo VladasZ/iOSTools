@@ -17,6 +17,14 @@ public extension WKInterfaceController {
     func push<T: WKInterfaceController>(_ controller: T.Type) {
         pushController(withName: T.className, context: nil)
     }
+    
+    func present<T: WKInterfaceController>(_ controller: T.Type) {
+        presentController(withName: T.className, context: nil)
+    }
+    
+    func reload<T: WKInterfaceController>(_ controller: T.Type) {
+        WKInterfaceController.reloadRootControllers(withNamesAndContexts: [(name: T.className, context: T.className as AnyObject)])
+    }
 }
 
 #endif
