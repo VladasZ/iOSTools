@@ -15,6 +15,23 @@ import MessageUI
 
 public class System {
     
+    public static func printFonts() {
+        
+//        for (NSString *family in [UIFont familyNames]) {
+//
+//            for(NSString *font in [UIFont fontNamesForFamilyName:family]) {
+//                NSLog(@"\n%@", font);
+//            }
+//        }
+        
+        
+        for family in UIFont.familyNames {
+            for font in UIFont.fontNames(forFamilyName: family) {
+                Log.info(font)
+            }
+        }
+    }
+    
     public static var flashIsOn: Bool {
         return AVCaptureDevice.default(for: AVMediaType.video)?.torchMode == .on
     }
