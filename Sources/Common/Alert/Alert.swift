@@ -95,6 +95,26 @@ public struct Alert {
             let action = WKAlertAction(title: "OK", style: .default, handler: { })
             rootController.presentAlert(withTitle: message, message: nil, preferredStyle: .alert, actions: [action])
         }
+        
+        public static func question(_ message: String, agreeAction: @escaping () -> ()) {
+            let ok = WKAlertAction(title: "OK", style: .default, handler: { agreeAction() })
+            let cancel = WKAlertAction(title: "Cancel", style: .default, handler: { })
+            rootController.presentAlert(withTitle: message,
+                                        message: nil,
+                                        preferredStyle: .alert,
+                                        actions: [ok, cancel])
+        }
+        
+        public static func question(_ message: String,
+                                    agreeAction: @escaping () -> (),
+                                    declineAction: @escaping () -> ()) {
+            let ok = WKAlertAction(title: "OK", style: .default, handler: { agreeAction() })
+            let cancel = WKAlertAction(title: "Cancel", style: .default, handler: { declineAction() })
+            rootController.presentAlert(withTitle: message,
+                                        message: nil,
+                                        preferredStyle: .alert,
+                                        actions: [ok, cancel])
+        }
     }
 
 #endif
