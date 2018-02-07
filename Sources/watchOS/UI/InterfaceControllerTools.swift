@@ -25,6 +25,14 @@ public extension WKInterfaceController {
     func reload<T: WKInterfaceController>(_ controller: T.Type) {
         WKInterfaceController.reloadRootControllers(withNamesAndContexts: [(name: controller.className, context: controller.className as AnyObject)])
     }
+    
+    func reload<T: WKInterfaceController>(_ controllers: [T.Type]) {
+        WKInterfaceController.reloadRootControllers(withNamesAndContexts: controllers.map {
+            (name: $0.className, context: $0.className as AnyObject)
+        })
+    }
+    
+    
 }
 
 #endif
