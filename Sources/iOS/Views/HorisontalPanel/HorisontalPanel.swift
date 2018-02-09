@@ -60,7 +60,6 @@ public class HorisontalPanel : UIView {
         scrollView.showsHorizontalScrollIndicator = false
         addSubview(scrollView)
         setup()
-        selectedIndex = 1
     }
     
     private func setup() {
@@ -87,6 +86,8 @@ public class HorisontalPanel : UIView {
             scrollView.addSubview(label)
             labels.append(label)
         }
+        
+        selectedIndex = 1
     }
     
     private func setupIndex() {
