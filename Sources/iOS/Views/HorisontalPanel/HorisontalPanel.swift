@@ -23,7 +23,7 @@ public class HorisontalPanel : UIView {
     public var color: UIColor = UIColor.gray
     public var selectedColor: UIColor = UIColor.black
     
-    public var selectedIndex: Int? = 0 { didSet { setupIndex() } }
+    public var selectedIndex: Int = 0 { didSet { setupIndex() } }
     
     private var scrollView: UIScrollView!
     private var labels: [UILabel] = []
@@ -60,6 +60,7 @@ public class HorisontalPanel : UIView {
         scrollView.showsHorizontalScrollIndicator = false
         addSubview(scrollView)
         setup()
+        selectedIndex = 1
     }
     
     private func setup() {
@@ -89,13 +90,13 @@ public class HorisontalPanel : UIView {
     }
     
     private func setupIndex() {
-        let index = selectedIndex ?? 0
+        let index = selectedIndex
         labels.forEach { $0.textColor = self.color }
         labels[index].textColor = selectedColor
         delegate?.horisontalPanelDidSelectIndex(index)
     }
     
     @objc private func didTap(_ sender: UITapGestureRecognizer) {
-        selectedIndex = sender.view?.tag
+        selectedIndex = sender.view?.tag ?? 0
     }
 }
