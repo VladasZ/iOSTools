@@ -87,7 +87,7 @@ public class HorisontalPanel : UIView {
             labels.append(label)
         }
         
-        selectedIndex = 1
+        selectedIndex = 0
     }
     
     private func setupIndex() {
