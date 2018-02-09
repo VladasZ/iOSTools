@@ -85,7 +85,9 @@ public class System {
     }
     
     public static func call(_ phoneNumber: String?) {
-        guard let number = phoneNumber else { Log.error("No phone number"); return }
+        guard var number = phoneNumber else { Log.error("No phone number"); return }
+        number = number.replacingOccurrences(of: " ", with: "")
+                       .replacingOccurrences(of: "-", with: "")
         if let url = URL(string: "tel://\(number)"), UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url)
