@@ -12,17 +12,17 @@ import SwiftyTools
 public extension UIView {
     
     @IBInspectable public var cornerRadius: CGFloat {
-        set { clipsToBounds = true; layer.cornerRadius = cornerRadius }
+        set { clipsToBounds = true; layer.cornerRadius = newValue }
         get { return layer.cornerRadius }
     }
     
     @IBInspectable public var borderWidth: CGFloat {
-        set { layer.borderWidth = borderWidth }
+        set { layer.borderWidth = newValue }
         get { return layer.borderWidth }
     }
     
     @IBInspectable public var borderColor: UIColor {
-        set { layer.borderColor = borderColor.cgColor }
+        set { layer.borderColor = newValue.cgColor }
         get { Log.warning(); return UIColor.clear }
     }
     
