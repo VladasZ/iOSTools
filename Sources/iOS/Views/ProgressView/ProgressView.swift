@@ -28,7 +28,6 @@ public class ProgressView : IBDesignableView {
     //MARK: - Inspectables
     
     @IBInspectable public var progress: CGFloat = 0 { didSet { setupProgress() } }
-    @IBInspectable public var cornerRadius: CGFloat = 0 { didSet { setupCornerRadius() } }
     @IBInspectable public var progressColor: UIColor! { didSet { setupProgressColor() } }
     @IBInspectable public var color: UIColor! { didSet { setupColor() } }
     @IBInspectable public var image: UIImage! { didSet { setupImage() } }
@@ -81,10 +80,6 @@ public class ProgressView : IBDesignableView {
     
     func setupColor() {
         backgroundView.backgroundColor = color
-    }
-    
-    func setupCornerRadius() {
-        layer.cornerRadius = cornerRadius
     }
 }
 
