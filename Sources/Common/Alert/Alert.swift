@@ -63,7 +63,7 @@ public struct Alert {
         let _conf = AlertConfiguration()
         conf(_conf)
         
-        let alert = UIAlertController(title: _conf.title, message: _conf.message, preferredStyle: .alert)
+        let alert = UIAlertController(title: _conf.title, message: _conf.message, preferredStyle: _conf.style)
         currentAlert = alert
         
         if _conf.hasTextField {
