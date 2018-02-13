@@ -12,16 +12,16 @@ import UIKit
 
 public class AlertButton {
     
-    var text: String
-    var isDestructive: Bool
-    var action: (() -> ())?
+    public var text: String
+    public var isDestructive: Bool
+    public var action: (() -> ())?
     
-    var UIAlertAction: UIAlertAction {
+    public var UIAlertAction: UIAlertAction {
         return UIKit.UIAlertAction(title: text, style: isDestructive ? .destructive : .default)
         { _ in self.action?() }
     }
     
-    init(text: String, isDestructive: Bool = false, action: (() -> ())? = nil) {
+    public init(text: String, isDestructive: Bool = false, action: (() -> ())? = nil) {
         self.text = text
         self.isDestructive = isDestructive
         self.action = action
