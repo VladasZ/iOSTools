@@ -42,7 +42,7 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     }
     
     public var imageViews = [UIImageView]()
-    private var imagesCount: Int = 0 {
+    public var imagesCount: Int = 0 {
         didSet {
             
             scrollView.removeAllSubviews()
