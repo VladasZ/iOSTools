@@ -89,5 +89,13 @@ public extension UIView {
     private class func _fromXib<T: UIView>() -> T? {
         return UINib(nibName: className, bundle: Bundle(for: self)).instantiate(withOwner: nil, options: nil)[0] as? T
     }
+    
+    func push(_ controller: UIViewController) {
+        viewController?.push(controller)
+    }
+    
+    func present(_ controller: UIViewController) {
+        viewController?.present(controller)
+    }
 }
 

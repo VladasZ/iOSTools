@@ -26,15 +26,15 @@ open class IBDesignableView : UIView {
     //MARK: - Initialization
     
     public required override init(frame: CGRect) {
-        
         super.init(frame: frame)
         addSubview(loadFromXib())
+        setup()
     }
     
     public required init?(coder aDecoder: NSCoder) {
-                
         super.init(coder: aDecoder)
         addSubview(loadFromXib())
+        setup()
     }
     
     private func loadFromXib() -> UIView {
@@ -44,7 +44,6 @@ open class IBDesignableView : UIView {
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = self.bounds
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        setup()
         return view
     }
     
