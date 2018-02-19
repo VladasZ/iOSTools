@@ -32,6 +32,7 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     @IBInspectable public var dotsPosition: CGFloat = 6 { didSet { stackViewPosition.constant = dotsPosition } }
     
     public var customWidth: CGFloat?
+    public var margin: CGFloat = 10
     
     public var delegate: SwipyImageViewDelegate?
         
@@ -42,12 +43,18 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     
     private var expectedIndex:Int {
         get {
-            return Int(scrollView.contentOffset.x / imageWidth)
+            return Int(scrollView.contentOffset.x / areaWidth)
         }
     }
     
     private var imageWidth: CGFloat {
         return customWidth ?? frame.size.width
+    }
+    
+    private var areaWidth: CGFloat {
+        var _width = imageWidth
+        if customWidth != nil { _width += margin }
+        return _width
     }
     
     public var imageViews = [UIImageView]()
@@ -61,8 +68,9 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
             stackView.isHidden                = customWidth != nil
             
             if imagesCount == 0 { return }
-            
-            scrollView.contentSize = CGSize(width: imageWidth * CGFloat(imagesCount), height: 0)
+    
+            scrollView.contentSize = CGSize(width: areaWidth * CGFloat(imagesCount),
+                                            height: 0)
             
             for i in 0...imagesCount - 1 {
                 
@@ -77,7 +85,7 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
                                                           height: self.frame.size.height))
                 
                 imageView.contentMode = .scaleAspectFit
-                imageView.frame.origin.x = imageWidth * CGFloat(i)
+                imageView.frame.origin.x = areaWidth * CGFloat(i)
                 imageViews.append(imageView)
                 
                 scrollView.addSubview(imageView)
@@ -123,12 +131,12 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
         
         scrollView.frame = self.frame
         
-        scrollView.contentSize = CGSize(width: imageWidth * CGFloat(imagesCount),
+        scrollView.contentSize = CGSize(width: areaWidth * CGFloat(imagesCount),
                                         height: 0)
         
         for i in 0...imagesCount - 1 {
             
-            imageViews[i].frame = CGRect(x:imageWidth * CGFloat(i),
+            imageViews[i].frame = CGRect(x:areaWidth * CGFloat(i),
                                          y:0,
                                          width:imageWidth,
                                          height:self.frame.size.height)
@@ -138,7 +146,7 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     //MARK: - UIScrollViewDelegate
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
+        if customWidth != nil { return }
         dots.forEach { dot in dot.backgroundColor = notSelectedColor }
         dots[expectedIndex].backgroundColor = selectedColor
         delegate?.swipyImageViewDidSelectImage(expectedIndex)
