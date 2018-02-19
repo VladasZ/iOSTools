@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="scrollView" destination="GlQ-O6-kOI" id="QvQ-cY-gMy"/>
                 <outlet property="stackView" destination="v05-5I-fcX" id="jex-HU-g3C"/>
+                <outlet property="stackViewPosition" destination="kFW-ip-T25" id="kAv-sf-Px3"/>
                 <outlet property="stackViewWidth" destination="3pc-W4-3gF" id="9ab-V6-icN"/>
             </connections>
         </placeholder>
@@ -21,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GlQ-O6-kOI">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GlQ-O6-kOI">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="Prz-IO-gz4"/>

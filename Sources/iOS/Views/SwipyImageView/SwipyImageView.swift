@@ -19,6 +19,7 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var stackViewWidth: NSLayoutConstraint!
     @IBOutlet private var stackView: UIStackView!
+    @IBOutlet var stackViewPosition: NSLayoutConstraint!
     
     //MARK: - Properties
     
@@ -28,8 +29,12 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     @IBInspectable public var dotSpacing: CGFloat = 9
     @IBInspectable public var dotSize: CGFloat = 8
     
-    public var delegate: SwipyImageViewDelegate?
+    @IBInspectable public var dotsPosition: CGFloat = 6 { didSet { stackViewPosition.constant = dotsPosition } }
     
+    public var customWidth: CGFloat?
+    
+    public var delegate: SwipyImageViewDelegate?
+        
     override public var contentMode: UIViewContentMode
         { didSet { imageViews.forEach { $0.contentMode = contentMode } } }
     
@@ -37,8 +42,12 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     
     private var expectedIndex:Int {
         get {
-            return Int(scrollView.contentOffset.x / frame.size.width)
+            return Int(scrollView.contentOffset.x / imageWidth)
         }
+    }
+    
+    private var imageWidth: CGFloat {
+        return customWidth ?? frame.size.width
     }
     
     public var imageViews = [UIImageView]()
@@ -47,9 +56,13 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
             
             scrollView.removeAllSubviews()
             
+            scrollView.bounces                = customWidth != nil
+            scrollView.isPagingEnabled        = customWidth == nil
+            stackView.isHidden                = customWidth != nil
+            
             if imagesCount == 0 { return }
             
-            scrollView.contentSize = CGSize(width: frame.size.width * CGFloat(imagesCount), height: 0)
+            scrollView.contentSize = CGSize(width: imageWidth * CGFloat(imagesCount), height: 0)
             
             for i in 0...imagesCount - 1 {
                 
@@ -60,11 +73,11 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
                 
                 let imageView = UIImageView(frame: CGRect(x: 0,
                                                           y: 0,
-                                                          width: self.frame.size.width,
+                                                          width: imageWidth,
                                                           height: self.frame.size.height))
                 
                 imageView.contentMode = .scaleAspectFit
-                imageView.frame.origin.x = self.frame.size.width * CGFloat(i)
+                imageView.frame.origin.x = imageWidth * CGFloat(i)
                 imageViews.append(imageView)
                 
                 scrollView.addSubview(imageView)
@@ -110,14 +123,14 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
         
         scrollView.frame = self.frame
         
-        scrollView.contentSize = CGSize(width: self.frame.size.width * CGFloat(imagesCount),
+        scrollView.contentSize = CGSize(width: imageWidth * CGFloat(imagesCount),
                                         height: 0)
         
         for i in 0...imagesCount - 1 {
             
-            imageViews[i].frame = CGRect(x:self.frame.size.width * CGFloat(i),
+            imageViews[i].frame = CGRect(x:imageWidth * CGFloat(i),
                                          y:0,
-                                         width:self.frame.size.width,
+                                         width:imageWidth,
                                          height:self.frame.size.height)
         }
     }
