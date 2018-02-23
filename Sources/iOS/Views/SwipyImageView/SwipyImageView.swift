@@ -35,6 +35,7 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     public var margin: CGFloat = 10
     
     public var delegate: SwipyImageViewDelegate?
+    public var dotsVisible: Bool { didSet { stackView.isHidden = !dotsVisible } }
         
     override public var contentMode: UIViewContentMode
         { didSet { imageViews.forEach { $0.contentMode = contentMode } } }
