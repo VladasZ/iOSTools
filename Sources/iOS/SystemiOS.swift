@@ -32,6 +32,12 @@ public class System {
         }
     }
     
+    public static var orientation: UIInterfaceOrientationMask = .portrait {
+        didSet {
+            UIDevice.current.setValue(orientation.rawValue, forKey: "orientation")
+        }
+    }
+    
     public static var flashIsOn: Bool {
         return AVCaptureDevice.default(for: AVMediaType.video)?.torchMode == .on
     }
