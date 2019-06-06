@@ -1,30 +1,29 @@
 //
 //  UIView+Style.swift
-//  iOSTools
+//  Actors Pocket Guide
 //
-//  Created by Vladas Zakrevskis on 6/29/17.
-//  Copyright © 2017 VladasZ. All rights reserved.
+//  Created by Vladas Zakrevskis on 03/06/2019.
+//  Copyright © 2019 Atomichronica. All rights reserved.
 //
-
-#if os(iOS)
 
 import UIKit
 import QuartzCore
-import SwiftyTools
 
 fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
     
-    guard let style = style else { Log.error(); return }
+    guard let style = style else { print("Style is nil"); return }
     
     if let color = style.color {
         view.backgroundColor = color
     }
     
     if style.isCircle {
-        view.circle()
+        view.clipsToBounds = true
+        view.layer.cornerRadius = view.frame.size.height / 2
     }
     
     if let cornerRadius = style.cornerRadius {
+        view.clipsToBounds = true
         view.layer.cornerRadius = cornerRadius
     }
     
@@ -41,7 +40,6 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
     }
     
     if let font = style.font {
-        
         if let label = view as? UILabel {
             label.font = font
         }
@@ -57,7 +55,6 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
     }
     
     if let textColor = style.textColor {
-        
         if let label = view as? UILabel {
             label.textColor = textColor
         }
@@ -73,41 +70,33 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
     }
     
     if let placeholderColor = style.placeholderColor {
-        
         if let textField = view as? UITextField {
-            
             let placeholderText = textField.placeholder ?? ""
             textField.attributedPlaceholder = NSAttributedString(string: placeholderText,
-                                                                 attributes: [NSAttributedStringKey.foregroundColor : placeholderColor])
+                                                                 attributes: [NSAttributedString.Key.foregroundColor : placeholderColor])
         }
     }
     
     if let textAlignment = style.textAlignment {
-        
         if let textField = view as? UITextField {
-            
             textField.textAlignment = textAlignment
         }
         else if let label = view as? UILabel {
-            
             label.textAlignment = textAlignment
         }
     }
     
     if let shadow = style.shadow {
-        
         view.layer.shadowOffset  = shadow.offset
         view.layer.shadowRadius  = shadow.radius
         view.layer.shadowOpacity = Float(shadow.opacity)
     }
     
     if let interactionEnabled = style.isUserInteractionEnabled {
-        
         view.isUserInteractionEnabled = interactionEnabled
     }
     
     if let customCode = style.customCode {
-        
         customCode(view)
     }
 }
@@ -125,16 +114,7 @@ public extension UIView {
     }
     
     fileprivate func setStyleWithID(_ id: String) {
-        
         style = Style.styleWithID(id)
-    }
-}
-
-public extension UITextField {
-    
-    @IBInspectable override var styleID: String {
-        get { return "nil" }
-        set { setStyleWithID(newValue) }
     }
 }
 
@@ -145,5 +125,3 @@ public extension UITextView {
         set { setStyleWithID(newValue) }
     }
 }
-
-#endif

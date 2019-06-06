@@ -160,8 +160,12 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
                 case .authorized:          success()
                 case .denied, .restricted: self.requestLibraryAccess()
                 case .notDetermined:       Log.warning("notDetermined")
+                @unknown default:
+                    fatalError()
                 }
             }
+        @unknown default:
+            fatalError()            
         }
     }
     
@@ -194,7 +198,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     
     //MARK: - Controller
     
-    private var sourceType: UIImagePickerControllerSourceType = .photoLibrary
+    private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -207,12 +211,12 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         if isVideo { picker.mediaTypes = [kUTTypeMovie as String] }
         
         view.addSubview(picker.view)
-        addChildViewController(picker)
+        addChild(picker)
     }
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        if var image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        if var image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             
             if !Media.hasPhoto { Log.error() }
             
@@ -226,7 +230,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             return
         }
         
-        if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
+        if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
             
             if !Media.hasVideo { Log.error() }
             

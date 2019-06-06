@@ -11,17 +11,17 @@ import SwiftyTools
 
 public extension UIView {
     
-    @IBInspectable public var cornerRadius: CGFloat {
+    @IBInspectable var cornerRadius: CGFloat {
         set { clipsToBounds = true; layer.cornerRadius = newValue }
         get { return layer.cornerRadius }
     }
     
-    @IBInspectable public var borderWidth: CGFloat {
+    @IBInspectable var borderWidth: CGFloat {
         set { layer.borderWidth = newValue }
         get { return layer.borderWidth }
     }
     
-    @IBInspectable public var borderColor: UIColor {
+    @IBInspectable var borderColor: UIColor {
         set { layer.borderColor = newValue.cgColor }
         get { Log.warning(); return UIColor.clear }
     }
@@ -44,9 +44,9 @@ public extension UIView {
         subviews.forEach { $0.removeFromSuperview() }
     }
     
-    func addTransparentBlur(style: UIBlurEffectStyle = .light) {
+    func addTransparentBlur(style: UIBlurEffect.Style = .light) {
         //http://stackoverflow.com/questions/17041669/creating-a-blurring-overlay-view
-        if !UIAccessibilityIsReduceTransparencyEnabled() {
+        if !UIAccessibility.isReduceTransparencyEnabled {
             backgroundColor = UIColor.clear
             
             let blurEffect = UIBlurEffect(style: style)

@@ -11,7 +11,7 @@
 import UIKit
 
 fileprivate var _backgroundColor = UIColor.gray
-fileprivate var _doneButtonTextAligment: UIControlContentHorizontalAlignment = .center
+fileprivate var _doneButtonTextAligment: UIControl.ContentHorizontalAlignment = .center
 fileprivate var _onFinishPicking: (() -> ())?
 
 public protocol DatePickerDelegate : class {
@@ -43,7 +43,7 @@ public class DatePicker : UIView {
 
     
     public static func setBackgroundColor(_ color: UIColor) { _backgroundColor = color }
-    public static func setDoneButtonTextAligment(_ aligment: UIControlContentHorizontalAlignment)
+    public static func setDoneButtonTextAligment(_ aligment: UIControl.ContentHorizontalAlignment)
         { _doneButtonTextAligment = aligment  }
     
     private static var hasDoneButton: Bool { return doneButtonTitle != nil }

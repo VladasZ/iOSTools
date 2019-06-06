@@ -12,33 +12,33 @@ import SwiftyTools
 
 public extension Debug {
     
-    public static var notImplementedMessage = "Not implemented yet"
+    static var notImplementedMessage = "Not implemented yet"
     
-    public static func notImplemented() {
+    static func notImplemented() {
         Alert.show(notImplementedMessage)
     }
     
-    public static func check(_ object: Any?, error: String) {
+    static func check(_ object: Any?, error: String) {
         if object == nil { Log.error(error) }
     }
     
-    public static func checkForNil(_ object: Any?, error: String) {
+    static func checkForNil(_ object: Any?, error: String) {
         if object != nil { Log.error(error) }
     }
     
-    public static func execute(_ block: () -> ()) {
+    static func execute(_ block: () -> ()) {
         block()
     }
     
-    public static func executeOnSimulator(_ simulator: () -> (), device: () -> ()) {
-        #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
+    static func executeOnSimulator(_ simulator: () -> (), device: () -> ()) {
+        #if targetEnvironment(simulator)
             simulator()
         #else
             device()
         #endif
     }
     
-    public static func addressOf<T: AnyObject>(_ object: T) -> Int {
+    static func addressOf<T: AnyObject>(_ object: T) -> Int {
         return unsafeBitCast(object, to: Int.self)
     }
     
@@ -49,7 +49,7 @@ public extension Debug {
     private static var button: UIButton!
     private static var debugButtonAction: (() -> ())!
     
-    public static func onDebugButtonClick(_ action: @escaping () -> ()) {
+    static func onDebugButtonClick(_ action: @escaping () -> ()) {
         
         if button == nil {
             button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))

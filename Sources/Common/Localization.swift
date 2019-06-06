@@ -12,7 +12,7 @@ import UIKit
 
 public extension UILabel {
     
-    @IBInspectable public var localizedString: String {
+    @IBInspectable var localizedString: String {
         set { text = NSLocalizedString(newValue, comment: "") }
         get { return "No localizedString getter" }
     }
@@ -20,7 +20,7 @@ public extension UILabel {
 
 public extension UIButton {
     
-    @IBInspectable public var localizedString: String {
+    @IBInspectable var localizedString: String {
         set { setTitle(NSLocalizedString(newValue, comment: ""), for: .normal) }
         get { return "No localizedString getter" }
     }
@@ -28,7 +28,7 @@ public extension UIButton {
 
 public extension UITabBarItem {
     
-    @IBInspectable public var localizedString: String {
+    @IBInspectable var localizedString: String {
         set { title = NSLocalizedString(newValue, comment: "")  }
         get { return "No localizedString getter" }
     }
@@ -36,7 +36,7 @@ public extension UITabBarItem {
 
 public extension UIViewController {
     
-    @IBInspectable public var localizedString: String {
+    @IBInspectable var localizedString: String {
         set { title = NSLocalizedString(newValue, comment: "")  }
         get { return "No localizedString getter" }
     }

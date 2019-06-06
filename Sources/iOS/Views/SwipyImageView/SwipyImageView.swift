@@ -37,9 +37,9 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     public var delegate: SwipyImageViewDelegate?
     public var dotsVisible: Bool = false { didSet { stackView.isHidden = !dotsVisible } }
         
-    override public var contentMode: UIViewContentMode
-        { didSet { imageViews.forEach { $0.contentMode = contentMode } } }
-    
+//    public var contentMode: UIView.ContentMode
+//        { didSet { imageViews.forEach { $0.contentMode = contentMode } } }
+//    
     private var dots = [UIView]()
     
     private var expectedIndex:Int {

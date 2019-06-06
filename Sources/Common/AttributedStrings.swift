@@ -10,26 +10,26 @@ import UIKit
 
 public extension String {
     
-    public func attributed(font: UIFont? = nil, color: UIColor? = nil, underlined: Bool = false, crossed: Bool = false) -> NSMutableAttributedString {
+    func attributed(font: UIFont? = nil, color: UIColor? = nil, underlined: Bool = false, crossed: Bool = false) -> NSMutableAttributedString {
         
-        var attributes = [NSAttributedStringKey : Any]()
+        var attributes = [NSAttributedString.Key : Any]()
         
         if let font = font {
-            attributes[NSAttributedStringKey.font] = font
+            attributes[NSAttributedString.Key.font] = font
         }
         
         if let color = color {
             
-            attributes[NSAttributedStringKey.foregroundColor] = color
+            attributes[NSAttributedString.Key.foregroundColor] = color
         }
         
         if underlined {
-            attributes[NSAttributedStringKey.underlineStyle] = NSUnderlineStyle.styleSingle.rawValue
+            attributes[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
         }
         
         if crossed {
             
-            attributes[NSAttributedStringKey.strikethroughStyle] = 2
+            attributes[NSAttributedString.Key.strikethroughStyle] = 2
         }
         
         return NSMutableAttributedString(string: self, attributes: attributes)

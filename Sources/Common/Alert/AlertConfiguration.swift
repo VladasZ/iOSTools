@@ -18,7 +18,7 @@ public class AlertConfiguration {
     public var message: String?
     public var buttons = [AlertButton]()
     public var hasTextField = false
-    public var style: UIAlertControllerStyle = .alert
+    public var style: UIAlertController.Style = .alert
     public var textFieldCompletion: ((String) -> ())?
     public var textFieldConfiguration: AlertTextFieldConfigurationBlock = nil
 }

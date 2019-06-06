@@ -35,7 +35,7 @@ open class TopPushPanel {
         if view == nil { setup() }
         if isVisible { return }; isVisible = true
         
-        keyWindow.bringSubview(toFront: view)
+        keyWindow.bringSubviewToFront(view)
         view.isHidden = false
         
         UIView.animate(withDuration: animationDuration) { view.y = 0 }

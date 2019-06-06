@@ -13,17 +13,17 @@ import SwiftyTools
 
 public extension UILabel {
     
-    public var lineSpacing: CGFloat { get { Log.warning(); return 0 }
+    var lineSpacing: CGFloat { get { Log.warning(); return 0 }
         set {
             let style = NSMutableParagraphStyle()
             style.lineSpacing = newValue
             style.alignment = textAlignment
             attributedText = NSAttributedString(string: self.text ?? "",
-                                                attributes: [NSAttributedStringKey.paragraphStyle : style])
+                                                attributes: [NSAttributedString.Key.paragraphStyle : style])
         }
     }
     
-    public func rectForString(_ string: String) -> CGRect? {
+    func rectForString(_ string: String) -> CGRect? {
         guard let nsText = text as NSString? else { return nil }
         let range = nsText.range(of: string)
         guard let rect = rectForCharacterRange(range: range) else { return nil }
@@ -31,7 +31,7 @@ public extension UILabel {
         return rect
     }
     
-    public func rectForCharacterRange(range: NSRange) -> CGRect? {
+    func rectForCharacterRange(range: NSRange) -> CGRect? {
         guard let attributedText = attributedText else { return nil }
         var glyphRange = NSRange()
         let layoutManager = NSLayoutManager()
@@ -44,7 +44,7 @@ public extension UILabel {
         return layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
     }
     
-    public func appendImage(_ image: UIImage, bounds: CGRect? = nil) {
+    func appendImage(_ image: UIImage, bounds: CGRect? = nil) {
         let attachment = NSTextAttachment()
         attachment.image = image
         if let bounds = bounds { attachment.bounds = bounds }

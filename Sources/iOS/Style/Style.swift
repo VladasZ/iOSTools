@@ -1,12 +1,10 @@
 //
 //  Style.swift
-//  iOSTools
+//  Actors Pocket Guide
 //
-//  Created by Vladas Zakrevskis on 6/29/17.
-//  Copyright © 2017 VladasZ. All rights reserved.
+//  Created by Vladas Zakrevskis on 03/06/2019.
+//  Copyright © 2019 Atomichronica. All rights reserved.
 //
-
-#if os(iOS)
 
 import UIKit
 
@@ -17,7 +15,6 @@ public struct Shadow {
     public var opacity: CGFloat
     
     public init(offset: CGSize = CGSize.zero, radius: CGFloat = 0, opacity: CGFloat = 0) {
-        
         self.offset = offset
         self.radius = radius
         self.opacity = opacity
@@ -29,7 +26,6 @@ public struct Style {
     internal static var styles = [Style]()
     
     internal static func styleWithID(_ id: String) -> Style? {
-        
         return (styles.filter { $0.identifier == id }).first
     }
     
@@ -49,12 +45,13 @@ public struct Style {
     public var isUserInteractionEnabled: Bool?
     public var customCode:       ((UIView) -> ())?
     
-    public init(id: String, _ initializer: ((inout Style) -> ())? = nil) {
-        
-        identifier = id
-        initializer?(&self)
-        Style.styles.append(self)
+    init(id: String) {
+        self.identifier = id
+    }
+    
+    public static func create(id: String, _ initializer: ((inout Style) -> ())? = nil) {
+        var style = Style(id: id);
+        initializer?(&style)
+        Style.styles.append(style)
     }
 }
-
-#endif

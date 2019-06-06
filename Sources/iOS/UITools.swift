@@ -36,7 +36,7 @@ public var keyWindow: UIView {
 
 func openSettings() {
     
-    guard let settingsURL = URL(string: UIApplicationOpenSettingsURLString)
+    guard let settingsURL = URL(string: UIApplication.openSettingsURLString)
         else { Log.error(); return }
     
     System.openURL(settingsURL)
@@ -146,7 +146,7 @@ public extension UIView {
         
         let mask = CAShapeLayer()
         mask.path = circlePath.cgPath
-        mask.fillRule = kCAFillRuleEvenOdd
+        mask.fillRule = CAShapeLayerFillRule.evenOdd
         self.layer.mask = mask
     }
 }
@@ -157,21 +157,18 @@ fileprivate let ANIMATION_DURATION:TimeInterval = 0.211
 
 public extension UIView {
     
-    public func hideAnimated() {
-        
+    func hideAnimated() {
         UIView.animate(withDuration: ANIMATION_DURATION,
                        animations: { self.alpha = 0},
                        completion: { _ in self.isHidden = true })
     }
     
-    public func showAnimated() {
-        
+    func showAnimated() {
         self.isHidden = false
         UIView.animate(withDuration: ANIMATION_DURATION) { self.alpha = 1 }
     }
     
-    public func setBackgroundColorAnimated(_ color:UIColor) {
-        
+    func setBackgroundColorAnimated(_ color:UIColor) {
         UIView.animate(withDuration: ANIMATION_DURATION) { self.backgroundColor = color }
     }
     

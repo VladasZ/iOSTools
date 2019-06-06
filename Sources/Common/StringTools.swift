@@ -13,6 +13,7 @@ public extension String {
     func sizeFor(font: UIFont) -> CGSize {
         let nsString = self as NSString
         return nsString.size(withAttributes:
-            [NSAttributedStringKey.font: font])
+            [NSAttributedString.Key.font: font])
     }
+    
 }
