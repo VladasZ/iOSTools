@@ -15,6 +15,8 @@ import CoreImage
 import MobileCoreServices
 import SwiftyTools
 
+public typealias ImageCompletion = (UIImage) -> ()
+
 public class Media : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     //MARK: - Strings
@@ -32,7 +34,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     public static var askForCameraPermissionMessage:String = "Application needs access to your camera."
     public static var openSettingsTitle:String = "Settings"
     
-    private static var photoCompletion: ((UIImage) -> ())?
+    private static var photoCompletion: ImageCompletion?
     private static var videoCompletion: ((URL) -> ())?
     private static var universalCompletion: ((UIImage?, URL?) -> ())?
     
@@ -42,40 +44,30 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     public static var lastImageName: String? {
         set { _lastImageName = newValue }
         get {
-        
+            
             let name = _lastImageName
             _lastImageName = nil
             return name
         }
     }
     
-    private static var topController: UIViewController {
-        
-        if let controller = controller { return controller }
-        return topmostController
-    }
-    
-    
     private static var pickTitle: String {
-        
         if universalCompletion != nil { return mediaPickTitle }
         if videoCompletion != nil { return videoPickTitle }
         if photoCompletion != nil { return imagePickTitle }
-        Log.error(); return mediaPickTitle
+        Log.error()
+        return mediaPickTitle
     }
     
     private static var hasVideo: Bool {
-        
         return videoCompletion != nil || universalCompletion != nil
     }
     
     private static var hasPhoto: Bool {
-        
         return photoCompletion != nil || universalCompletion != nil
     }
     
     private static func clearCompletions() {
-        
         photoCompletion = nil
         videoCompletion = nil
         universalCompletion = nil
@@ -89,59 +81,56 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     //MARK: - Static elements
     
     public static func getVideo(_ completion: @escaping (URL) -> ()) {
-        
         videoCompletion = completion
         if photoDialog == nil { setDialog() }
-        topController.present(photoDialog!, animated: true, completion: nil)
+        topmostController.present(photoDialog!, animated: true, completion: nil)
     }
     
-    public static func getImage(_ completion: @escaping (UIImage) -> ()) {
-        
+    public static func getImage(_ completion: @escaping ImageCompletion) {
         photoCompletion = completion
         if photoDialog == nil { setDialog() }
-        topController.present(photoDialog!, animated: true, completion: nil)
+        topmostController.present(photoDialog!, animated: true, completion: nil)
     }
     
     public static func get(_ completion: @escaping (UIImage?, URL?) -> ()) {
-        
         universalCompletion = completion
         if photoDialog == nil { setDialog() }
-        topController.present(photoDialog!, animated: true, completion: nil)
+        topmostController.present(photoDialog!, animated: true, completion: nil)
     }
     
     private static func pickVideo() {
-        
         checkLibraryPermission {
             let controller = Media()
-            controller.isVideo = true            
-            topController.present(controller, animated: true)
+            controller.isVideo = true
+            topmostController.present(controller, animated: true)
         }
     }
     
     private static func recordVideo() {
-        
         checkLibraryPermission {
             let controller = Media()
             controller.isVideo = true
             controller.sourceType = .camera
-            topController.present(controller, animated: true)
+            topmostController.present(controller, animated: true)
         }
     }
     
-    private static func pickPhoto() {
-        
+    public static func pickPhoto(_ completion: ImageCompletion? = nil) {
+        photoCompletion = completion
         checkLibraryPermission {
-            let controller = Media()
-            topController.present(controller, animated: true)
+          //  let controller = Media()
+            presentPicker(Media())
+           // topmostController.present(controller, animated: true)
         }
     }
     
-    private static func takePhoto() {
-        
+    public static func takePhoto(_ completion: ImageCompletion? = nil) {
+        photoCompletion = completion
         checkCameraPermission {
-            let controller = Media()
-            controller.sourceType = .camera
-            topController.present(controller, animated: true)
+            let media = Media()
+            media.sourceType = .camera
+            presentPicker(media)
+            //topmostController.present(controller, animated: true)
         }
     }
     
@@ -155,40 +144,39 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         case .notDetermined:
             
             PHPhotoLibrary.requestAuthorization() { status in
-                
-                switch status {
-                case .authorized:          success()
-                case .denied, .restricted: self.requestLibraryAccess()
-                case .notDetermined:       Log.warning("notDetermined")
-                @unknown default:
-                    fatalError()
+                onMain {
+                    switch status {
+                    case .authorized:          success()
+                    case .denied, .restricted: self.requestLibraryAccess()
+                    case .notDetermined:       Log.warning("notDetermined")
+                    @unknown default:
+                        fatalError()
+                    }
                 }
             }
         @unknown default:
-            fatalError()            
+            fatalError()
         }
     }
     
     private static func checkCameraPermission(_ success: @escaping () -> ()) {
-        
-        if AVCaptureDevice.authorizationStatus(for: AVMediaType.video) ==  AVAuthorizationStatus.authorized {
+        if AVCaptureDevice.authorizationStatus(for: .video) == .authorized {
             success()
+            return
         }
-        else {
-            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted :Bool) -> Void in
+        AVCaptureDevice.requestAccess(for: .video, completionHandler: { granted in
+            onMain {
                 if granted == true { success() }
                 else   { requestCameraAccess() }
-            });
-        }
+            }
+        });
     }
     
     private static func requestLibraryAccess() {
-        
         Alert.question(askForLibraryPermissionMessage, agreeTitle: openSettingsTitle) { openSettings() }
     }
     
     private static func requestCameraAccess() {
-        
         Alert.question(askForCameraPermissionMessage, agreeTitle: openSettingsTitle) { openSettings() }
     }
     
@@ -200,23 +188,28 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     
     private var sourceType: UIImagePickerController.SourceType = .photoLibrary
     
-    override public func viewDidLoad() {
-        super.viewDidLoad()
+    private static var currentMedia: Media?
+    
+    private static func presentPicker(_ media: Media) {
+        
+        currentMedia = media
         
         let picker = UIImagePickerController()
         
-        picker.sourceType = sourceType
-        picker.delegate = self
+        picker.sourceType = media.sourceType
+        picker.delegate = media
         
-        if isVideo { picker.mediaTypes = [kUTTypeMovie as String] }
+        if media.isVideo {
+            picker.mediaTypes = [kUTTypeMovie as String]
+        }
         
-        view.addSubview(picker.view)
-        addChild(picker)
+        topmostController.present(picker)
     }
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
-        if var image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+    public func imagePickerController(_ picker: UIImagePickerController,
+                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if var image = info[.originalImage] as? UIImage {
             
             if !Media.hasPhoto { Log.error() }
             
@@ -230,7 +223,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             return
         }
         
-        if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+        if let videoURL = info[.mediaURL] as? URL {
             
             if !Media.hasVideo { Log.error() }
             
@@ -243,6 +236,10 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         }
         
         Log.error()
+    }
+    
+    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        topmostController.dismiss()
     }
     
     //MARK: Dialog
@@ -269,3 +266,5 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
 }
 
 #endif
+
+
