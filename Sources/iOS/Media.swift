@@ -118,9 +118,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     public static func pickPhoto(_ completion: ImageCompletion? = nil) {
         photoCompletion = completion
         checkLibraryPermission {
-          //  let controller = Media()
             presentPicker(Media())
-           // topmostController.present(controller, animated: true)
         }
     }
     
@@ -130,7 +128,6 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             let media = Media()
             media.sourceType = .camera
             presentPicker(media)
-            //topmostController.present(controller, animated: true)
         }
     }
     
@@ -215,7 +212,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             
             image = image.withoutRotation
             
-            dismiss(animated: true, completion: nil)
+            topmostController.dismiss()
             
             Media.photoCompletion?(image)
             Media.universalCompletion?(image, nil)
@@ -227,7 +224,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             
             if !Media.hasVideo { Log.error() }
             
-            dismiss(animated: true, completion: nil)
+            topmostController.dismiss()
             
             Media.videoCompletion?(videoURL)
             Media.universalCompletion?(nil, videoURL)
