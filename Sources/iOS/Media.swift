@@ -195,6 +195,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         
         picker.sourceType = media.sourceType
         picker.delegate = media
+        picker.allowsEditing = true
         
         if media.isVideo {
             picker.mediaTypes = [kUTTypeMovie as String]
@@ -206,7 +207,12 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        
         if var image = info[.originalImage] as? UIImage {
+            
+            if let edited = info[.editedImage] as? UIImage {
+                image = edited
+            }
             
             if !Media.hasPhoto { Log.error() }
             
