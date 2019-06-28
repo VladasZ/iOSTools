@@ -65,7 +65,7 @@ public class CheckRule {
             }
             return "must be more than \(value) characters long"
         case .noSpaces:
-            if text.containsWhitespace {
+            if text.rangeOfCharacter(from: .whitespacesAndNewlines) != nil {
                 return "must not contain whitespaces"
             }
             return nil
