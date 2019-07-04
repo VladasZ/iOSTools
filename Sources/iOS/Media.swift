@@ -39,7 +39,8 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     private static var universalCompletion: ((UIImage?, URL?) -> ())?
     
     public static var customizePicker: ((UIImagePickerController) -> ())?
-    
+    public static var onFinish: (() -> ())?
+
     public static var controller: UIViewController?
     
     private static var _lastImageName: String?
@@ -74,6 +75,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         videoCompletion = nil
         universalCompletion = nil
         photoDialog = nil
+        onFinish?()
     }
     
     //MARK: - Properties
@@ -222,11 +224,12 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             
             image = image.withoutRotation
             
-            topmostController.dismiss()
             
             Media.photoCompletion?(image)
             Media.universalCompletion?(image, nil)
             Media.clearCompletions()
+            
+            topmostController.dismiss()
             return
         }
         
@@ -234,11 +237,12 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             
             if !Media.hasVideo { Log.error() }
             
-            topmostController.dismiss()
             
             Media.videoCompletion?(videoURL)
             Media.universalCompletion?(nil, videoURL)
             Media.clearCompletions()
+            
+            topmostController.dismiss()
             return
         }
         
@@ -246,6 +250,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     }
     
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        Media.clearCompletions()
         topmostController.dismiss()
     }
     
