@@ -38,6 +38,8 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     private static var videoCompletion: ((URL) -> ())?
     private static var universalCompletion: ((UIImage?, URL?) -> ())?
     
+    public static var customizePicker: ((UIImagePickerController) -> ())?
+    
     public static var controller: UIViewController?
     
     private static var _lastImageName: String?
@@ -200,6 +202,8 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         if media.isVideo {
             picker.mediaTypes = [kUTTypeMovie as String]
         }
+        
+        customizePicker?(picker)
         
         topmostController.present(picker)
     }
