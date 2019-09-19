@@ -16,6 +16,7 @@ import MobileCoreServices
 import SwiftyTools
 
 public typealias ImageCompletion = (UIImage) -> ()
+public typealias GifCompletion = (Data?, UIImage?) -> ()
 
 public class Media : UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -35,12 +36,13 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     public static var openSettingsTitle:String = "Settings"
     
     private static var photoCompletion: ImageCompletion?
+    private static var gifCompletion: GifCompletion?
     private static var videoCompletion: ((URL) -> ())?
     private static var universalCompletion: ((UIImage?, URL?) -> ())?
     
     public static var customizePicker: ((UIImagePickerController) -> ())?
     public static var onFinish: (() -> ())?
-
+    
     public static var controller: UIViewController?
     
     private static var _lastImageName: String?
@@ -70,10 +72,15 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         return photoCompletion != nil || universalCompletion != nil
     }
     
+    private static var hasGif: Bool {
+        return gifCompletion != nil
+    }
+    
     private static func clearCompletions() {
         photoCompletion = nil
         videoCompletion = nil
         universalCompletion = nil
+        gifCompletion = nil
         photoDialog = nil
         onFinish?()
     }
@@ -132,6 +139,13 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             let media = Media()
             media.sourceType = .camera
             presentPicker(media)
+        }
+    }
+    
+    public static func pickGif(_ completion: GifCompletion? = nil) {
+        gifCompletion = completion
+        checkLibraryPermission {
+            presentPicker(Media())
         }
     }
     
@@ -210,9 +224,76 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         topmostController.present(picker)
     }
     
+    private func extractGif(_ picker: UIImagePickerController, info: [UIImagePickerController.InfoKey : Any]) -> Bool {
+        
+        if #available(iOS 11.0, *) {
+            
+            if !Media.hasGif {
+                return false
+            }
+            
+            guard let imageURL = info[.imageURL] as? URL else {
+                Log.error("Failed to get gif url")
+                return false
+            }
+            
+            if imageURL.pathExtension != "gif" {
+                return false
+            }
+            
+            guard let imageAsset = info[.phAsset] as? PHAsset else {
+                Log.error("Failed to get gif PHAsset")
+                return false
+            }
+            
+            let requestOptions = PHImageRequestOptions()
+            requestOptions.isSynchronous = true
+            
+            var success = false
+            
+            PHImageManager.default()
+                .requestImageData(for: imageAsset, options: requestOptions) { data, _, _, info in
+                    
+                    guard let info = info else {
+                        Log.error("No PHImageManager info")
+                        return
+                    }
+                    
+                    if let error = info[PHImageErrorKey] as? Error {
+                        Log.error(error)
+                        return
+                    } else {
+                        
+                        if let isInCould = info[PHImageResultIsInCloudKey] as? Bool, isInCould {
+                            Log.error("Cannot fetch data from cloud. Option for network access not set.")
+                            return
+                        }
+                        
+                        if !Media.hasGif { Log.error() }
+                        
+                        Media.gifCompletion?(data, nil)
+                        Media.clearCompletions()
+                        
+                        topmostController.dismiss()
+                        
+                        success = true
+                    }
+            }
+            
+            return success
+            
+        }
+        else {
+            return false
+        }
+    }
+    
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        if extractGif(picker, info: info) {
+            return
+        }
         
         if var image = info[.originalImage] as? UIImage {
             
@@ -224,8 +305,8 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             
             image = image.withoutRotation
             
-            
             Media.photoCompletion?(image)
+            Media.gifCompletion?(nil, image)
             Media.universalCompletion?(image, nil)
             Media.clearCompletions()
             
@@ -236,7 +317,6 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         if let videoURL = info[.mediaURL] as? URL {
             
             if !Media.hasVideo { Log.error() }
-            
             
             Media.videoCompletion?(videoURL)
             Media.universalCompletion?(nil, videoURL)
@@ -278,5 +358,6 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
 }
 
 #endif
+
 
 
