@@ -15,7 +15,7 @@ public extension UITableView {
     
     func getCell<T: UITableViewCell>(_ type: T.Type, _ setup: ((T) -> ())? = nil) -> UITableViewCell {
         guard let cell: T = dequeueReusableCell(withIdentifier: T.identifier) as? T
-            else { Log.error("No cell for identifier: \(T.identifier)"); return UITableViewCell() }
+            else { LogError("No cell for identifier: \(T.identifier)"); return UITableViewCell() }
         setup?(cell)
         return cell
     }

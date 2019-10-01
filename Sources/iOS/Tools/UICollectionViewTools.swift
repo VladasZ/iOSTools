@@ -17,7 +17,7 @@
                                          indexPath: IndexPath,
                                          _ setup: ((T) -> ())? = nil) -> UICollectionViewCell {
             guard let cell: T = dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as? T
-                else { Log.error("No cell for identifier: \(T.identifier)"); return UICollectionViewCell() }
+                else { LogError("No cell for identifier: \(T.identifier)"); return UICollectionViewCell() }
             setup?(cell)
             return cell
         }

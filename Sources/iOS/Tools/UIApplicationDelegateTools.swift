@@ -13,9 +13,9 @@ public extension UIApplicationDelegate {
     
     static func changeRootControllerAnimated(_ controller: UIViewController) {
         
-        guard let _window = UIApplication.shared.delegate?.window else { Log.error(); return }
-        guard let window = _window else { Log.error(); return }
-        guard let snapshot = window.snapshotView(afterScreenUpdates: true) else { Log.error(); return }
+        guard let _window = UIApplication.shared.delegate?.window else { LogError(); return }
+        guard let window = _window else { LogError(); return }
+        guard let snapshot = window.snapshotView(afterScreenUpdates: true) else { LogError(); return }
     
         controller.view.addSubview(snapshot);
         window.rootViewController = controller

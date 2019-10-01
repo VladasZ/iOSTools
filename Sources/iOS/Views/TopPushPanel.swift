@@ -18,7 +18,7 @@ open class TopPushPanel {
     private static var isVisible: Bool = false
     public static var view: UIView!
     
-    open class var height: CGFloat { Log.error(); return CGFloat() }
+    open class var height: CGFloat { LogError(); return CGFloat() }
     
     open class var visibilityDuration: Int { return 2 }
     open class var animationDuration: TimeInterval { return 0.211 }

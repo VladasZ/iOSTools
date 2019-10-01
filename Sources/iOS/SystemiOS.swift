@@ -27,7 +27,7 @@ public class System {
         
         for family in UIFont.familyNames {
             for font in UIFont.fontNames(forFamilyName: family) {
-                Log.info(font)
+                Log(font)
             }
         }
     }
@@ -53,7 +53,7 @@ public class System {
     public static func toggleFlash(on: Bool) {
         guard let device = AVCaptureDevice.default(for: AVMediaType.video),
               device.hasTorch,
-            ((try? device.lockForConfiguration()) != nil) else { Log.error(); return }
+            ((try? device.lockForConfiguration()) != nil) else { LogError(); return }
         
         device.torchMode = on ? .on : .off
         device.unlockForConfiguration()
@@ -64,7 +64,7 @@ public class System {
     }
     
     public static func openURL(_ url: URL?) {
-        guard let url = url else { Log.error("No URL"); return }
+        guard let url = url else { LogError("No URL"); return }
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
@@ -73,16 +73,16 @@ public class System {
     }
 
     public static func openURL(_ urlString: String?) {
-        guard let urlString = urlString else { Log.error("No URL string"); return }
-        guard let url = URL(string: urlString) else { Log.error("Invalid URL"); return }
+        guard let urlString = urlString else { LogError("No URL string"); return }
+        guard let url = URL(string: urlString) else { LogError("Invalid URL"); return }
         openURL(url)
     }
     
     public static func sendEmail(_ email: String?) {
         guard let email = email, email.isValidEmail
-            else { Log.error("Invalid email"); return  }
+            else { LogError("Invalid email"); return  }
         guard MFMailComposeViewController.canSendMail()
-            else { Log.error("Mail services are not available"); return }
+            else { LogError("Mail services are not available"); return }
 
         let mailController = MFMailComposeViewController()
         
@@ -91,7 +91,7 @@ public class System {
     }
     
     public static func call(_ phoneNumber: String?) {
-        guard var number = phoneNumber else { Log.error("No phone number"); return }
+        guard var number = phoneNumber else { LogError("No phone number"); return }
         number = number.replacingOccurrences(of: " ", with: "")
                        .replacingOccurrences(of: "-", with: "")
         if let url = URL(string: "tel://\(number)"), UIApplication.shared.canOpenURL(url) {
@@ -101,7 +101,7 @@ public class System {
                 UIApplication.shared.openURL(url)
             }
         }
-        else { Log.error() }
+        else { LogError() }
     }
 }
 

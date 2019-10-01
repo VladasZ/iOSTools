@@ -28,7 +28,7 @@ public class LinkButton : UIButton {
     }
     
     @objc private func didTap() {
-        guard let url = link?.url else { Log.error(); return }
+        guard let url = link?.url else { LogError(); return }
         System.openURL(url)
     }
 }

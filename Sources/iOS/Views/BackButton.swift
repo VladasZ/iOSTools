@@ -33,7 +33,7 @@ open class BackButton : ExpandedHitAreaButton {
     }
     
     @objc private func didTap() {
-        guard let controller = viewController else { Log.error(); return }
+        guard let controller = viewController else { LogError(); return }
         if let nav = controller.navigationController {
             nav.popViewController(animated: true)
         }

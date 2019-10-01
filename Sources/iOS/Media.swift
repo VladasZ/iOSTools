@@ -60,7 +60,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         if universalCompletion != nil { return mediaPickTitle }
         if videoCompletion != nil { return videoPickTitle }
         if photoCompletion != nil { return imagePickTitle }
-        Log.error()
+        LogError()
         return mediaPickTitle
     }
     
@@ -163,7 +163,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
                     switch status {
                     case .authorized:          success()
                     case .denied, .restricted: self.requestLibraryAccess()
-                    case .notDetermined:       Log.warning("notDetermined")
+                    case .notDetermined:       LogWarning("notDetermined")
                     @unknown default:
                         fatalError()
                     }
@@ -233,7 +233,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             }
             
             guard let imageURL = info[.imageURL] as? URL else {
-                Log.error("Failed to get gif url")
+                LogError("Failed to get gif url")
                 return false
             }
             
@@ -242,7 +242,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             }
             
             guard let imageAsset = info[.phAsset] as? PHAsset else {
-                Log.error("Failed to get gif PHAsset")
+                LogError("Failed to get gif PHAsset")
                 return false
             }
             
@@ -255,21 +255,21 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
                 .requestImageData(for: imageAsset, options: requestOptions) { data, _, _, info in
                     
                     guard let info = info else {
-                        Log.error("No PHImageManager info")
+                        LogError("No PHImageManager info")
                         return
                     }
                     
                     if let error = info[PHImageErrorKey] as? Error {
-                        Log.error(error)
+                        LogError(error)
                         return
                     } else {
                         
                         if let isInCould = info[PHImageResultIsInCloudKey] as? Bool, isInCould {
-                            Log.error("Cannot fetch data from cloud. Option for network access not set.")
+                            LogError("Cannot fetch data from cloud. Option for network access not set.")
                             return
                         }
                         
-                        if !Media.hasGif { Log.error() }
+                        if !Media.hasGif { LogError() }
                         
                         Media.gifCompletion?(data, nil)
                         Media.clearCompletions()
@@ -301,7 +301,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
                 image = edited
             }
             
-            if !Media.hasPhoto { Log.error() }
+            if !Media.hasPhoto { LogError() }
             
             image = image.withoutRotation
             
@@ -316,7 +316,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         
         if let videoURL = info[.mediaURL] as? URL {
             
-            if !Media.hasVideo { Log.error() }
+            if !Media.hasVideo { LogError() }
             
             Media.videoCompletion?(videoURL)
             Media.universalCompletion?(nil, videoURL)
@@ -326,7 +326,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             return
         }
         
-        Log.error()
+        LogError()
     }
     
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

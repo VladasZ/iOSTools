@@ -20,7 +20,7 @@ public var topmostController: UIViewController {
     }
     
     guard let controller = topController
-        else { Log.error(); return UIViewController() }
+        else { LogError(); return UIViewController() }
     
     return controller
 }
@@ -29,7 +29,7 @@ public var keyWindow: UIView {
     
     guard let _window = UIApplication.shared.delegate?.window,
         let window = _window
-        else { Log.error(); return UIView() }
+        else { LogError(); return UIView() }
     
     return window
 }
@@ -37,7 +37,7 @@ public var keyWindow: UIView {
 func openSettings() {
     
     guard let settingsURL = URL(string: UIApplication.openSettingsURLString)
-        else { Log.error(); return }
+        else { LogError(); return }
     
     System.openURL(settingsURL)
 }

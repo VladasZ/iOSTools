@@ -13,9 +13,9 @@ public extension UIImage {
     
     static func draw(_ width: CGFloat, _ height: CGFloat, _ drawingBlock: (_ ctx: CGContext) -> ()) -> UIImage {
         UIGraphicsBeginImageContext(CGSize(width, height))
-        guard let context = UIGraphicsGetCurrentContext() else { Log.error(); return UIImage() }
+        guard let context = UIGraphicsGetCurrentContext() else { LogError(); return UIImage() }
         drawingBlock(context)
-        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { Log.error(); return UIImage() }
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { LogError(); return UIImage() }
         UIGraphicsEndImageContext()
         return image
     }

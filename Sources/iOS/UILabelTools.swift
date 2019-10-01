@@ -13,7 +13,7 @@ import SwiftyTools
 
 public extension UILabel {
     
-    var lineSpacing: CGFloat { get { Log.warning(); return 0 }
+    var lineSpacing: CGFloat { get { LogWarning(); return 0 }
         set {
             let style = NSMutableParagraphStyle()
             style.lineSpacing = newValue

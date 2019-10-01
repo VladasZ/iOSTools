@@ -19,11 +19,11 @@ public extension Debug {
     }
     
     static func check(_ object: Any?, error: String) {
-        if object == nil { Log.error(error) }
+        if object == nil { LogError(error) }
     }
     
     static func checkForNil(_ object: Any?, error: String) {
-        if object != nil { Log.error(error) }
+        if object != nil { LogError(error) }
     }
     
     static func execute(_ block: () -> ()) {

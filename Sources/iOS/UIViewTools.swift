@@ -23,7 +23,7 @@ public extension UIView {
     
     @IBInspectable var borderColor: UIColor {
         set { layer.borderColor = newValue.cgColor }
-        get { Log.warning(); return UIColor.clear }
+        get { LogWarning(); return UIColor.clear }
     }
     
     var viewController: UIViewController? {
@@ -58,7 +58,7 @@ public extension UIView {
             insertSubview(blurEffectView, at: 0)
         }
         else {
-            Log.warning()
+            LogWarning()
             backgroundColor = UIColor.clear
         }
     }

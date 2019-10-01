@@ -32,7 +32,7 @@ public class CheckRule {
         if type == .wasSelected {
             
             guard let wasSelected = field.value(forKey: "wasSelected") as? Bool else {
-                Log.error()
+                LogError()
                 return "Failed to get selection status from deop down"
             }
             
@@ -44,7 +44,7 @@ public class CheckRule {
         }
         
         guard let text = field.value(forKey: "text") as? String else {
-            Log.error()
+            LogError()
             return "Failed to get text from field"
         }
         
@@ -75,7 +75,7 @@ public class CheckRule {
             }
             return nil
         case .wasSelected:
-            Log.error()
+            LogError()
             return "Invalid rule for text field"
         }
     }

@@ -17,7 +17,7 @@ public extension UIImageView {
         
         if let placeholder = placeholder { image = placeholder }
         
-        guard let imageURL = URL(string: url) else { Log.error(); return }
+        guard let imageURL = URL(string: url) else { LogError(); return }
         
         URLSession.shared.dataTask(with: imageURL) { data, response, error in
             
@@ -25,7 +25,7 @@ public extension UIImageView {
                   let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                   let data = data, error == nil,
                   let image = UIImage(data: data)
-                else { Log.error(); return }
+                else { LogError(); return }
             
             DispatchQueue.main.async() { self.image = image }
             
