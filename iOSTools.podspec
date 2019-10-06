@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name           = 'iOSTools'
-s.version        = '0.15.29'
+s.version        = '0.15.28'
 s.summary        = "iOS tools kit to make your life easier."
 s.homepage       = "https://github.com/VladasZ/iOSTools"
 s.author         = { 'Vladas Zakrevskis' => '146100@gmail.com' }
