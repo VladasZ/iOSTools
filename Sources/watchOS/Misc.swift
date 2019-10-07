@@ -14,7 +14,7 @@ import SwiftyTools
 public var rootController: WKInterfaceController {
     
     guard let controller = WKExtension.shared().rootInterfaceController
-        else { Log.error(); return WKInterfaceController() }
+        else { LogError(); return WKInterfaceController() }
     return controller
 }
 

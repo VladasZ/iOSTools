@@ -60,6 +60,6 @@ public class RoundButton {
             return
         }
         
-        Log.error()
+        LogError()
     }
 }
