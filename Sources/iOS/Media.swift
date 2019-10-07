@@ -40,6 +40,8 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
     private static var videoCompletion: ((URL) -> ())?
     private static var universalCompletion: ((UIImage?, URL?) -> ())?
     
+    private static var allowsEditing: Bool = true
+    
     public static var customizePicker: ((UIImagePickerController) -> ())?
     public static var onFinish: (() -> ())?
     
@@ -126,15 +128,17 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         }
     }
     
-    public static func pickPhoto(_ completion: ImageCompletion? = nil) {
+    public static func pickPhoto(allowsEditing: Bool = true, _ completion: ImageCompletion? = nil) {
         photoCompletion = completion
+        Media.allowsEditing = allowsEditing
         checkLibraryPermission {
             presentPicker(Media())
         }
     }
     
-    public static func takePhoto(_ completion: ImageCompletion? = nil) {
+    public static func takePhoto(allowsEditing: Bool = true, _ completion: ImageCompletion? = nil) {
         photoCompletion = completion
+        Media.allowsEditing = allowsEditing
         checkCameraPermission {
             let media = Media()
             media.sourceType = .camera
@@ -142,8 +146,9 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         }
     }
     
-    public static func pickGif(_ completion: GifCompletion? = nil) {
+    public static func pickGif(allowsEditing: Bool = true, _ completion: GifCompletion? = nil) {
         gifCompletion = completion
+        Media.allowsEditing = allowsEditing
         checkLibraryPermission {
             presentPicker(Media())
         }
@@ -213,7 +218,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         
         picker.sourceType = media.sourceType
         picker.delegate = media
-        picker.allowsEditing = true
+        picker.allowsEditing = allowsEditing
         
         if media.isVideo {
             picker.mediaTypes = [kUTTypeMovie as String]
