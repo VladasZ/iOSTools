@@ -32,6 +32,7 @@ public struct Style {
     public var identifier:               String
     
     public var color:                    UIColor?
+    public var tintColor:                UIColor?
     public var isCircle                  = false
     public var cornerRadius:             CGFloat?
     public var borderWidth:              CGFloat?

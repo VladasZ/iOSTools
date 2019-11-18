@@ -17,6 +17,10 @@ fileprivate func setupView(_ view: UIView, withStyle style: Style?) {
         view.backgroundColor = color
     }
     
+    if let tintColor = style.tintColor {
+        view.tintColor = tintColor
+    }
+    
     if style.isCircle {
         view.clipsToBounds = true
         view.layer.cornerRadius = view.frame.size.height / 2
