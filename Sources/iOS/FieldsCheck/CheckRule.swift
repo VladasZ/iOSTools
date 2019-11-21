@@ -14,6 +14,7 @@ public enum RuleType {
     case moreThan
     case noSpaces
     case notEmpty
+    case notOnlySpaces
     case wasSelected
 }
 
@@ -77,6 +78,11 @@ public class CheckRule {
         case .wasSelected:
             LogError()
             return "Invalid rule for text field"
+        case .notOnlySpaces:
+            if text.trimmingCharacters(in: .whitespacesAndNewlines).count == 0 {
+                return "must not be empty"
+            }
+            return nil
         }
     }
     
