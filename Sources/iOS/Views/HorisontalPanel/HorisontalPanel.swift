@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyTools
 
 public protocol HorisontalPanelDelegate : class {
     func horisontalPanelDidSelectIndex(_ index: Int)

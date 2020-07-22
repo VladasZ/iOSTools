@@ -9,7 +9,6 @@
 #if os(watchOS)
 
 import WatchKit
-import SwiftyTools
 
 public var rootController: WKInterfaceController {
     

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Vladas Zakrevskis. All rights reserved.
 //
 
+#if os(watchOS)
+
 import HealthKit
 
 public extension HKWorkoutSession {
@@ -16,3 +18,5 @@ public extension HKWorkoutSession {
         return try? HKWorkoutSession(configuration: workoutConfiguration)
     }
 }
+
+#endif

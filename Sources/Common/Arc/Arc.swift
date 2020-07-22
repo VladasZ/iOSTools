@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyTools
 
 public enum ArcPosition {
     

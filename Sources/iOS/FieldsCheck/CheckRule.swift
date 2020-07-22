@@ -6,7 +6,8 @@
 //  Copyright © 2019 VladasZ. All rights reserved.
 //
 
-import SwiftyTools
+import Foundation
+
 
 public enum RuleType {
     case isEmail

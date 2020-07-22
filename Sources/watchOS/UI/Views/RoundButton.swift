@@ -6,8 +6,10 @@
 //  Copyright © 2017 Vladas Zakrevskis. All rights reserved.
 //
 
+#if os(watchOS)
+
+
 import WatchKit
-import SwiftyTools
 
 public extension UIColor {
     
@@ -63,3 +65,5 @@ public class RoundButton {
         LogError()
     }
 }
+
+#endif

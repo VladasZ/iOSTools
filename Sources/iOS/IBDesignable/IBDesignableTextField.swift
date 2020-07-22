@@ -9,7 +9,6 @@
 #if os(iOS)
 
 import UIKit
-import SwiftyTools
 
 @IBDesignable
 open class IBDesignableTextField : UITextField {

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyTools
 
 open class BackButton : ExpandedHitAreaButton {
     

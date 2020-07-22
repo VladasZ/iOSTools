@@ -145,7 +145,7 @@ public class SwipyImageView : XibView, UIScrollViewDelegate {
     }
     
     public func setIndex(_ index: Int, animated: Bool = true) {
-        scrollView.setContentOffset(CGPoint(index.CGFloat * areaWidth, 0), animated: animated)
+        scrollView.setContentOffset(CGPoint(index.toCGFloat * areaWidth, 0), animated: animated)
     }
     
     //MARK: - UIScrollViewDelegate

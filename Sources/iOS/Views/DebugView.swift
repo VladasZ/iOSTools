@@ -63,10 +63,10 @@ public class DebugView : UIView {
         
         view.removeAllSubviews()
         
-        let buttonWidth = keyWindow.width / buttons.count.CGFloat
+        let buttonWidth = keyWindow.width / buttons.count.toCGFloat
         
         for i in 0...buttons.count - 1 {
-            let button = UIButton(buttonWidth * i.CGFloat, 0, buttonWidth, wiewHeight)
+            let button = UIButton(buttonWidth * i.toCGFloat, 0, buttonWidth, wiewHeight)
             button.setTitle(buttons[i].0, for: .normal)
             button.tag = i
             button.addTarget(view,

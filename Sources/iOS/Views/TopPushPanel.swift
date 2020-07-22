@@ -9,7 +9,6 @@
 #if os(iOS)
 
 import UIKit
-import SwiftyTools
 
 open class TopPushPanel {
     
@@ -40,7 +39,7 @@ open class TopPushPanel {
         
         UIView.animate(withDuration: animationDuration) { view.y = 0 }
 
-        if autoDismiss { after(visibilityDuration.Double) { dismiss() } }
+        if autoDismiss { after(visibilityDuration.toDouble) { dismiss() } }
     }
     
     public static func dismiss() {

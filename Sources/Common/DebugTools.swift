@@ -8,7 +8,6 @@
 
 
 import UIKit
-import SwiftyTools
 
 public extension Debug {
     

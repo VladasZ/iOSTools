@@ -9,8 +9,7 @@
 #if os(iOS)
     
     import UIKit
-    import SwiftyTools
-    
+        
     public extension UICollectionView {
         
         func getCell<T: UICollectionViewCell>(_ type: T.Type,

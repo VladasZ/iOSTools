@@ -13,7 +13,6 @@ import Photos
 import CoreGraphics
 import CoreImage
 import MobileCoreServices
-import SwiftyTools
 
 public typealias ImageCompletion = (UIImage) -> ()
 public typealias GifCompletion = (Data?, UIImage?) -> ()

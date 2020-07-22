@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyTools
 
 fileprivate func viewWithSize<T>(_ size: CGSize) -> T where T: IBDesignableView {
     return T(frame: CGRect(0, 0, size.width, size.height))

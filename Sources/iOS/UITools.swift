@@ -9,7 +9,6 @@
 #if os(iOS)
 
 import UIKit
-import SwiftyTools
 
 public var topmostController: UIViewController {
     

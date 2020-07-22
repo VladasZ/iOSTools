@@ -6,6 +6,8 @@
 //  Copyright © 2017 Vladas Zakrevskis. All rights reserved.
 //
 
+#if os(watchOS)
+
 import WatchKit
 
 public class CircleProgressView {
@@ -56,3 +58,5 @@ public class CircleProgressView {
     }
     
 }
+
+#endif

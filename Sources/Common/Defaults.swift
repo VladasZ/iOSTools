@@ -7,22 +7,23 @@
 //
 
 import Foundation
-import SwiftyTools
 
-fileprivate let defaults = UserDefaults.standard
+class _Defaults {
+    
+    private let defaults = UserDefaults.standard;
 
-public class Defaults {
+    fileprivate init() { }
     
-    public static func setValue(_ value: Any?, forKey key: String) {
-        defaults.set(value, forKey: key)
-    }
-    
-    public static func valueForKey<T>(_ key: String) -> T? {
-        if let value = defaults.value(forKey: key) {
-            if let tValue = value as? T { return tValue }
-            LogError("Wrong defaults type for key: " + key)
-            return nil
+    subscript<T>(key: String) -> T? {
+        get {
+            return defaults.value(forKey: key) as? T
         }
-        return nil
+        set {
+            defaults.set(newValue, forKey: key)
+            defaults.synchronize()
+        }
     }
+    
 }
+
+let Defaults = _Defaults()
