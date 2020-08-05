@@ -18,6 +18,7 @@ public extension UITableView {
         setup?(cell)
         return cell
     }
+    
 }
 
 public extension UITableViewCell {
@@ -27,6 +28,7 @@ public extension UITableViewCell {
     class func registerFor(_ tableView: UITableView) {
         tableView.register(UINib(nibName: identifier, bundle: Bundle(for: self)), forCellReuseIdentifier: identifier)
     }
+    
 }
 
 #endif

@@ -23,14 +23,16 @@ public struct Alert {
         currentAlert = nil
     }
         
-    public static func show(_ message: String, _ agreeAction: (() -> ())? = nil) {
+    public static func show(_ message: String?, _ agreeAction: (() -> ())? = nil) {
+        guard let message = message else { return }
         present { conf in
             conf.title = message
             conf.buttons.append(AlertButton(text: agreeLabel, action: agreeAction))
         }
     }
         
-    public static func error(_ message:String, configuration: AlertConfigurationBlock = nil) {
+    public static func error(_ message: String?) {
+        guard let message = message else { return }
         present { conf in
             conf.title = errorLabel
             conf.message = message
