@@ -9,8 +9,14 @@
 #if os(iOS)
 
 import UIKit
+import Kingfisher
+
+public typealias UIImageCompletion  = (_ error: String?, _ image:   UIImage ) -> ()
+public typealias UIImagesCompletion = (_ error: String?, _ images: [UIImage]) -> ()
 
 public extension UIImage {
+    
+    static let dummy = UIImage()
     
     var monochrome: UIImage {
         
@@ -59,6 +65,22 @@ public extension UIImage {
         UIGraphicsEndImageContext()
 
         return newImage
+    }
+    
+    static func download(_ url: URLConvertible, _ completion: @escaping UIImageCompletion) {
+        
+        guard let url = url.toUrl else {
+            completion("Invalid url", UIImage.dummy)
+            return
+        }
+        
+        KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil) { result in
+            switch result {
+            case .success(let value): completion(nil, value.image)
+            case .failure(let error): completion(error.localizedDescription, UIImage.dummy)
+            }
+        }
+        
     }
     
 }
