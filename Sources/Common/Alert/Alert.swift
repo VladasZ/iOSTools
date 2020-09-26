@@ -81,7 +81,7 @@ public struct Alert {
             _conf.buttons.forEach { alert.addAction($0.UIAlertAction) }
         }
         
-        topmostController.present(alert)
+        sync { topmostController.present(alert) }
     }
 }
 

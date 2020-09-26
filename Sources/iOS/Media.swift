@@ -159,14 +159,14 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
         
         switch status {
         case .authorized:          success()
-        case .denied, .restricted: self.requestLibraryAccess()
+        case .denied, .restricted, .limited: self.requestLibraryAccess()
         case .notDetermined:
             
             PHPhotoLibrary.requestAuthorization() { status in
-                onMain {
+                sync {
                     switch status {
                     case .authorized:          success()
-                    case .denied, .restricted: self.requestLibraryAccess()
+                    case .denied, .restricted, .limited: self.requestLibraryAccess()
                     case .notDetermined:       LogWarning("notDetermined")
                     @unknown default:
                         fatalError()
@@ -184,7 +184,7 @@ public class Media : UIViewController, UINavigationControllerDelegate, UIImagePi
             return
         }
         AVCaptureDevice.requestAccess(for: .video, completionHandler: { granted in
-            onMain {
+            sync {
                 if granted == true { success() }
                 else   { requestCameraAccess() }
             }

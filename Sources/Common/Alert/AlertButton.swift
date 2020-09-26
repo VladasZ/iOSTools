@@ -18,7 +18,7 @@ public class AlertButton {
     
     public var UIAlertAction: UIAlertAction {
         return UIKit.UIAlertAction(title: text, style: isDestructive ? .destructive : .default)
-        { _ in self.action?() }
+            { _ in sync { self.action?() } }
     }
     
     public init(text: String, isDestructive: Bool = false, action: (() -> ())? = nil) {
