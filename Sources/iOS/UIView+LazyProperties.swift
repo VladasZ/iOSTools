@@ -54,19 +54,24 @@ public extension UIView {
     var maxY: CGFloat { return frame.maxY }
     
     func centerHorizontally() {
-        guard let superview = superview else { return }
+        guard let superview = superview else { LogError(); return }
         x = superview.width / 2 - width / 2
     }
     
     func centerVertically() {
-        guard let superview = superview else { return }
+        guard let superview = superview else { LogError(); return }
         y = superview.height / 2 - height / 2
     }
     
     func centerInSuperview() {
-        guard let superview = superview else { return }
+        guard let superview = superview else { LogError(); return }
         x = superview.width / 2 - width / 2
         y = superview.height / 2 - height / 2
+    }
+    
+    func placeR(_ margin: CGFloat = 0) {
+        guard let superview = superview else { LogError(); return }
+        x = superview.frame.width - width - margin
     }
 }
 
