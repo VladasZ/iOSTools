@@ -23,9 +23,7 @@ class Spinner {
     static func showIn(_ view: UIView) {
         let spinner = make
         spinner.startAnimating()
-        view.addSubview(spinner)
-        spinner.centerVertically()
-        spinner.placeR(28)
+        layout(spinner, in: view)
         view.isUserInteractionEnabled = false
         spinners[View(view)] = Spin(spinner)
     }
@@ -45,6 +43,29 @@ class Spinner {
             }
         }
         return nil
+    }
+    
+}
+
+fileprivate extension Spinner {
+    
+    static func layout(_ spinner: UIActivityIndicatorView, in view: UIView) {
+        
+        if let scroll = view as? UIScrollView {
+            layout(spinner, in: scroll)
+            return
+        }
+        
+        view.addSubview(spinner)
+        spinner.centerVertically()
+        spinner.placeR(28)
+    }
+    
+    static func layout(_ spinner: UIActivityIndicatorView, in scroll: UIScrollView) {
+        guard let superview = scroll.superview else { LogError(); return }
+        superview.addSubview(spinner)
+        spinner.centerHorizontally()
+        spinner.y = scroll.y + 20
     }
     
 }
