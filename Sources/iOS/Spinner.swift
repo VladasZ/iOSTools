@@ -15,14 +15,14 @@ class Spinner {
     typealias Spin = Weak<UIActivityIndicatorView>
     
     private static var spinners = [View : Spin]()
-        
+    
     private static var make: UIActivityIndicatorView {
         UIActivityIndicatorView(frame: CGRect(0, 0, 20, 20))
     }
     
     static func showIn(_ view: UIView) {
         let spinner = make
-        spinner.startAnimating()
+        after(0.2) { [weak spinner] in spinner?.startAnimating() }
         layout(spinner, in: view)
         view.isUserInteractionEnabled = false
         spinners[View(view)] = Spin(spinner)
@@ -69,3 +69,4 @@ fileprivate extension Spinner {
     }
     
 }
+
