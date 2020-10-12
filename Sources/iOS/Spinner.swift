@@ -20,7 +20,8 @@ class Spinner {
         UIActivityIndicatorView(frame: CGRect(0, 0, 20, 20))
     }
     
-    static func showIn(_ view: UIView) {
+    static func showIn(_ view: UIView?) {
+        guard let view = view else { return }
         let spinner = make
         after(0.2) { [weak spinner] in spinner?.startAnimating() }
         layout(spinner, in: view)
@@ -28,7 +29,8 @@ class Spinner {
         spinners[View(view)] = Spin(spinner)
     }
     
-    static func hideFrom(_ view: UIView) {
+    static func hideFrom(_ view: UIView?) {
+        guard let view = view else { return }
         guard let pair = findFor(view) else { LogError(); return }
         spinners.removeValue(forKey: pair.view)
         guard let spinner = pair.spin.value else { LogError(); return }
