@@ -14,7 +14,7 @@ fileprivate let hourMinTimeFormatter = DateFormatter("HH:mm")
 
 public extension CMTime {
     
-    public var toString: String {
+    var toString: String {
         
         let date = Date(timeIntervalSinceReferenceDate: CMTimeGetSeconds(self))
         return hourMinTimeFormatter.string(from: date)
