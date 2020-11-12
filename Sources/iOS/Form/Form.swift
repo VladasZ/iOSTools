@@ -10,7 +10,7 @@
 
 import UIKit
 
-open class Form {
+open class _Form {
     
     public var title: String = ""
     public var caption: String = ""
