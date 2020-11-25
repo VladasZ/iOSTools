@@ -162,6 +162,10 @@ public extension UIView {
                        completion: { _ in self.isHidden = true })
     }
     
+    func showAnimated(_ show: Bool) {
+        show ? showAnimated() : hideAnimated()
+    }
+    
     func showAnimated() {
         self.isHidden = false
         UIView.animate(withDuration: ANIMATION_DURATION) { self.alpha = 1 }
