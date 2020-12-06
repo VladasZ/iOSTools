@@ -19,14 +19,16 @@ class Spinner {
     private static var make: UIActivityIndicatorView {
         UIActivityIndicatorView(frame: CGRect(0, 0, 20, 20))
     }
-    
-    static func showIn(_ view: UIView?) {
-        guard let view = view else { return }
+
+    @discardableResult
+    static func showIn(_ view: UIView?) -> UIView? {
+        guard let view = view else { return nil }
         let spinner = make
         after(0.2) { [weak spinner] in spinner?.startAnimating() }
         layout(spinner, in: view)
         view.isUserInteractionEnabled = false
         spinners[View(view)] = Spin(spinner)
+        return view
     }
     
     static func hideFrom(_ view: UIView?) {
