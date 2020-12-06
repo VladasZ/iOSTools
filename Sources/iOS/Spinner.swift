@@ -13,7 +13,9 @@ class Spinner {
     
     typealias View = Weak<UIView>
     typealias Spin = Weak<UIActivityIndicatorView>
-    
+
+    static var startDelay = 0.1
+
     private static var spinners = [View : Spin]()
     
     private static var make: UIActivityIndicatorView {
@@ -24,7 +26,7 @@ class Spinner {
     static func showIn(_ view: UIView?) -> UIView? {
         guard let view = view else { return nil }
         let spinner = make
-        after(0.2) { [weak spinner] in spinner?.startAnimating() }
+        after(startDelay) { [weak spinner] in spinner?.startAnimating() }
         layout(spinner, in: view)
         view.isUserInteractionEnabled = false
         spinners[View(view)] = Spin(spinner)
