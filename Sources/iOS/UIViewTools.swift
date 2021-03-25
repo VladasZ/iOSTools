@@ -22,7 +22,9 @@ public extension UIView {
     
     @IBInspectable var borderColor: UIColor {
         set { layer.borderColor = newValue.cgColor }
-        get { LogWarning(); return UIColor.clear }
+        get { if let color = layer.borderColor { return UIColor(cgColor: color) }
+                return .clear
+            }
     }
     
     var viewController: UIViewController? {
