@@ -25,4 +25,14 @@ public class ScreenFieldsCheck {
         return nil
     }
     
+    public func check(_ field: NSObject) -> String? {
+        guard let field = fields.first(where: {$0.field === field }) else {
+            LogError("No such field registered")
+            return nil
+        }
+        if let error = field.check() {
+            return error
+        }
+        return nil
+    }
 }

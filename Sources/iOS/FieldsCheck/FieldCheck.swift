@@ -11,22 +11,24 @@ import UIKit
 public class FieldCheck {
     
     private var name: String
-    private var field: NSObject
+    var field: NSObject
     private var rules: [CheckRule]
+    private var customError: String?
     
-    public init(name: String, field: NSObject, rules: [CheckRule]) {
+    public init(name: String, field: NSObject, rules: [CheckRule], customError: String? = nil) {
         self.name = name
         self.field = field
         self.rules = rules
+        self.customError = customError
     }
     
     func check() -> String? {
         for rule in rules {
             if let error = rule.checkField(field) {
-                return "\(name) \(error)"
+                return customError ?? "\(name) \(error)"
             }
         }
         return nil
     }
-    
+        
 }
