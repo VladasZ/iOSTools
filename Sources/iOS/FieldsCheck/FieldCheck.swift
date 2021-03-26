@@ -15,17 +15,16 @@ public class FieldCheck {
     private var rules: [CheckRule]
     private var customError: String?
     
-    public init(name: String, field: NSObject, rules: [CheckRule], customError: String? = nil) {
+    public init(name: String, field: NSObject, rules: [CheckRule]) {
         self.name = name
         self.field = field
         self.rules = rules
-        self.customError = customError
     }
     
     func check() -> String? {
         for rule in rules {
-            if let error = rule.checkField(field) {
-                return customError ?? "\(name) \(error)"
+            if let error = rule.checkField(field, with: name) {
+                return error
             }
         }
         return nil

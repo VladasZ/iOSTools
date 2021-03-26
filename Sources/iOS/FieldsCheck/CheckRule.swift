@@ -23,26 +23,27 @@ public class CheckRule {
     
     private let value: Int
     private let type: RuleType
+    private let customError: String?
     
-    public init(_ type: RuleType, _ value: Int = 0) {
+    private var name: String = ""
+    
+    public init(_ type: RuleType, _ value: Int = 0, customError: String? = nil) {
         self.type = type
         self.value = value
+        self.customError = customError
     }
     
-    internal func checkField(_ field: NSObject) -> String? {
+    internal func checkField(_ field: NSObject, with name: String) -> String? {
+        self.name = name
         
         if type == .wasSelected {
             
             guard let wasSelected = field.value(forKey: "wasSelected") as? Bool else {
                 LogError()
-                return "Failed to get selection status from deop down"
+                return "Failed to get selection state from drop down"
             }
             
-            if wasSelected {
-                return nil
-            }
-            
-            return "must be selected"
+            return wasSelected ? nil : error(for: type)
         }
         
         guard let text = field.value(forKey: "text") as? String else {
@@ -52,39 +53,46 @@ public class CheckRule {
         
         switch type {
         case .isEmail:
-            if text.isValidEmail {
-                return nil
-            }
-            return "must be a valid email address"
+            return text.isValidEmail ? nil : error(for: type)
+    
         case .lessThan:
-            if text.count < value {
-                return nil
-            }
-            return "must be less than \(value) characters long"
+            return text.count < value ? nil : error(for: type, value: value)
+         
         case .moreThan:
-            if text.count > value {
-                return nil
-            }
-            return "must be more than \(value) characters long"
+            return text.count > value ? nil : error(for: type, value: value)
+           
         case .noSpaces:
-            if text.rangeOfCharacter(from: .whitespacesAndNewlines) != nil {
-                return "must not contain whitespaces"
-            }
-            return nil
+            return text.rangeOfCharacter(from: .whitespacesAndNewlines) != nil
+            ? error(for: type) : nil
+        
         case .notEmpty:
-            if text.isEmpty {
-                return "must not be empty"
-            }
-            return nil
+            return text.isEmpty ? error(for: type) : nil
+            
         case .wasSelected:
             LogError()
             return "Invalid rule for text field"
+            
         case .notOnlySpaces:
-            if text.trimmingCharacters(in: .whitespacesAndNewlines).count == 0 {
-                return "must not be empty"
-            }
-            return nil
+            return text.trim().count == 0 ? error(for: type) : nil
+            
         }
     }
     
+    internal func message(for type: RuleType, _ value: Int) -> String {
+        switch type {
+        case .isEmail:  return "must be a valid email address"
+        case .lessThan: return "must be less than \(value) characters long"
+        case .moreThan: return "must be more than \(value) characters long"
+        case .noSpaces: return "must not contain whitespaces"
+        case .notEmpty: return "must not be empty"
+        case .notOnlySpaces: return "must not be empty"
+        case .wasSelected:   return "must be selected"
+        }
+    }
+    
+    internal func error(for type: RuleType, value: Int = 0) -> String {
+        guard customError == nil else { return customError.anyString }
+        
+        return name + " " + message(for: type, value)
+    }
 }
