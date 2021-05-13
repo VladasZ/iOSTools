@@ -14,7 +14,7 @@ fileprivate var _backgroundColor = UIColor.gray
 fileprivate var _doneButtonTextAligment: UIControl.ContentHorizontalAlignment = .center
 fileprivate var _onFinishPicking: (() -> ())?
 
-public protocol DatePickerDelegate : class {
+public protocol DatePickerDelegate : AnyObject {
     
     func datePickerDidBeginPicking()
     func datePickerDidEndPicking()

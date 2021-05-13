@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol HorisontalPanelDelegate : class {
+public protocol HorisontalPanelDelegate : AnyObject {
     func horisontalPanelDidSelectIndex(_ index: Int)
 }
 

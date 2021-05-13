@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol SwipyImageViewDelegate : class {
+public protocol SwipyImageViewDelegate : AnyObject {
     func swipyImageViewDidSelectImage(_ index: Int)
 }
 
