@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol Reloadable {
+protocol Reloadable: AnyObject {
     
     func reloadData()
     
