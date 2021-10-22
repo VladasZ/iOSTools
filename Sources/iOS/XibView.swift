@@ -19,7 +19,7 @@ open class XibView : UIView {
     public class func fromNib() -> Self { return viewWithSize(defaultSize) }
     
     private static var identifier: String { return String(describing: self) }
-    private var identifier: String { return type(of: self).identifier }
+    var identifier: String { return type(of: self).identifier }
     
     //MARK: - Initialization
     
